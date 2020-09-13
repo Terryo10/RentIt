@@ -6,25 +6,26 @@ class Houses extends Component {
     
     state = { 
         houses:[]
-     }
-    getproducts =async()=> {
-        api.get('/products').then((res)=>{
-           this.setState({
-               houses:res.data.products.data
-           })
-           console.log(res)
-           
-        })
+     };
+     constructor(props){
+        super(props)
+        this.gethouses()
+     };
+    gethouses =async()=> {
+        let data = await api.get("/properties").then(({ data }) => data);
+        this.setState({ houses: data.products });
+        console.log(data.products)
+   
     }
     render() { 
         return ( 
             <div>
             <div>
-                <button className="btn btn-success "onClick={this.getproducts}>FETCH HOUSES BABY</button>
+               
             </div>
             <div>
             <ul>
-            {this.state.houses.map(houses=><li key={houses.id}>{houses.title}</li>)}
+            {this.state.houses.map(houses=><li key={houses.id}>{houses.city}</li>)}
             </ul>
             </div>
             </div>

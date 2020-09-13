@@ -23,8 +23,11 @@ class PostProperty extends Component {
       contact_info: "",
       categories_id: "",
       categories: [],
+      selectedFile: "",
+      yard_size:"",
     };
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.onFileChange = this.onFileChange.bind(this);
   }
   //Getting lists for selection
 
@@ -44,31 +47,39 @@ class PostProperty extends Component {
       [name]: value,
     });
   }
+
+  //Handling file changes
+  onFileChange(event) {
+    // Update the state
+    event.preventDefault();
+    let file = event.target.files[0];
+    this.setState({
+      selectedFile:file
+    })
+    
+
+  }
+
   //Posting data
 
   Post = async (event) => {
     event.preventDefault();
-    let formData = {};
-
+    const fd = new FormData();
+    fd.append('image',this.state.selectedFile,this.state.selectedFile.name);
+    fd.append('city',this.state.city);
+    fd.append('street',this.state.street);
+    fd.append('province',this.state.province);
+    fd.append('country',this.state.country);
+    fd.append('bathroom_number',this.state.bathroom_number);
+    fd.append('garage_number',this.state.garage_number);
+    fd.append('description',this.state.description);
+    fd.append('price',this.state.price);
+    fd.append('day_or_month',this.state.day_or_month);
+    fd.append('contact_info',this.state.contact_info);
+    fd.append('categories_id',this.state.categories_id);
+    fd.append('yard_size',this.state.yard_size);
     api
-      .post("/properties",
-        {
-          location: this.state.location,
-          street: this.state.street,
-          city: this.state.city,
-          province: this.state.province,
-          country: this.state.country,
-          bedroom_number: this.state.bedroom_number,
-          toilet_number: this.state.toilet_number,
-          bathroom_number: this.state.bathroom_number,
-          garage_number: this.state.garage_number,
-          description: this.state.description,
-          price: this.state.price,
-          day_or_month: this.state.day_or_month,
-          contact_info: this.state.contact_info,
-          categories_id: this.state.categories_id,
-        },
-      )
+      .post("/properties",fd)
       .then((res) => {
         console.log(res.data);
       });
@@ -284,6 +295,19 @@ class PostProperty extends Component {
                     </div>
                     <div className="mb-3">
                       <div className="title mb-2">
+                        <i className="lni lni-home"></i>
+                        <span>Yard Size (optional)</span>
+                      </div>
+                      <input
+                        className="form-control"
+                        type="number"
+                        name="yard_size"
+                        value={this.state.yard_size}
+                        onChange={this.handleInputChange}
+                      ></input>
+                    </div>
+                    <div className="mb-3">
+                      <div className="title mb-2">
                         <i className="lni lni-book"></i>
                         <span>Description</span>
                       </div>
@@ -302,7 +326,7 @@ class PostProperty extends Component {
                         <i className="lni lni-image"></i>
                         <span> Main Image</span>
                       </div>
-                      <input type="file"></input>
+                      <input type="file" onChange={this.onFileChange}></input>
                     </div>
                     <button className="btn btn-success w-100" type="submit">
                       Save Property
