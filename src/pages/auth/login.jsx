@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 // import axios from "axios";
 import api from "../../apiUtils/api";
+import { Redirect } from "react-router-dom";
 
 class Login extends Component {
   constructor(props) {
@@ -9,6 +10,8 @@ class Login extends Component {
       email: "",
       password: "",
       isLoding: false,
+      error: "",
+      redirect: null,
     };
   }
 
@@ -42,21 +45,45 @@ class Login extends Component {
       isLoding: true,
     });
     api
-      .post("/login", {
+      .post("login", {
         username: this.state.email,
         password: this.state.password,
       })
       .then((res) => {
         this.setState({
-            isLoding:false
+          isLoding: false,
         });
-        console.log(res.data);
+        if (res.status === 200) {
+          localStorage.setItem("login", JSON.stringify(res.data));
+          //push to the next page here
+          console.log(res);
+          this.setState({ redirect: "/home" });
+          console.log(this.state.redirect);
+        } else {
+          this.setState({
+            isloding: false,
+            error: res.data.message,
+          });
+          console.log(res.data.message);
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          // The request was made and the server responded with a status code that falls out of the range of 2xx
+          let err = error.response.data;
+          this.setState({
+            error: err.message,
+            isLoding: false,
+          });
+          console.log("zvaramba");
+        }
       });
   };
 
   validateEmail = (email) => {
-    const re = /\+2637[7-8|1|3][0-9]{7}$/;
-    // const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    // const re = ^[a-z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1}([a-z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1})*[a-z0-9]@[a-z0-9][-\.]{0,1}([a-z][-\.]{0,1})*[a-z0-9]\.[a-z0-9]{1,}([\.\-]{0,1}[a-z]){0,}[a-z0-9]{0,}$ ;
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    //email regex
     if (re.exec(email)) {
       console.log(email);
       return true;
@@ -76,11 +103,17 @@ class Login extends Component {
   };
 
   render() {
-    var loading =<div className=" d-flex justify-content-center">
-    <div className="spinner-border text-dark " role="status">
-    <span className="sr-only">Loading...</span>;
-    </div>
-    </div>
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />;
+    }
+
+    let loading = (
+      <div className=" d-flex justify-content-center">
+        <div className="spinner-border text-dark " role="status">
+          <span className="sr-only">Loading...</span>;
+        </div>
+      </div>
+    );
     let action;
     if (this.state.isLoding === true) {
       action = loading;
@@ -142,12 +175,17 @@ class Login extends Component {
                     Forgot Password?
                   </a>
                   <p className="mb-0">
-                    Didn't have an account?<a href="/" className="ml-1">Register Now</a>
+                    Didn't have an account?
+                    <a href="/" className="ml-1">
+                      Register Now
+                    </a>
                   </p>
                 </div>
 
                 <div className="view-as-guest mt-3">
-                  <a href="/"className="btn">View as Guest</a>
+                  <a href="/" className="btn">
+                    View as Guest
+                  </a>
                 </div>
               </div>
             </div>

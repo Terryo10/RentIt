@@ -6,7 +6,9 @@ import {
   
 } from "react-router-dom";
 import Homepage from './pages/home';
-import Loginpage from './pages/auth/login'
+import Loginpage from './pages/auth/login';
+import Settingspage from './pages/settings';
+import PostProperty from './pages/post';
 
 // Some folks find value in a centralized route config.
 // A route config is just data. React is great at mapping
@@ -21,15 +23,19 @@ export default function RouteConfigExample() {
   return (
     <Router>
       <Switch>
-          <Route path="/about">
-            <About />
+          <Route path="/settings">
+            <Settings />
           </Route>
           <Route path="/login">
             <Login />
           </Route>
+          <Route path="/post">
+            <Post />
+          </Route>
           <Route path="/">
             <Home />
           </Route>
+          
         </Switch>
     </Router>
   );
@@ -44,8 +50,12 @@ function Login() {
   return <Loginpage/>;
 }
 
-function About() {
-  return <h2>Users</h2>;
+function Settings() {
+  return <Settingspage/>;
+}
+
+function Post() {
+  return <PostProperty/>;
 }
 
 
