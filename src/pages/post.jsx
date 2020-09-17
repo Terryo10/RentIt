@@ -6,7 +6,7 @@ import api from "../apiUtils/api";
 class PostProperty extends Component {
   constructor(props) {
     super(props);
-    this.getPropertyType();
+    // this.getPropertyType();
     this.state = {
       location: "",
       street: "",
@@ -31,11 +31,11 @@ class PostProperty extends Component {
   }
   //Getting lists for selection
 
-  getPropertyType = async () => {
-    let data = await api.get("/categories").then(({ data }) => data);
-    this.setState({ categories: data.category });
-    console.log(data.category);
-  };
+  // getPropertyType = async () => {
+  //   let data = await api.get("/categories").then(({ data }) => data);
+  //   this.setState({ categories: data.category });
+  //   console.log(data.category);
+  // };
 
   //handling all form changes ka1
   handleInputChange(event) {
@@ -89,8 +89,7 @@ class PostProperty extends Component {
     return (
       <div>
         <HeaderGlobal></HeaderGlobal>
-        <div className="page-content-wrapper">
-          <div className="container">
+        
             <div className="profile-wrapper-area py-3">
               <div className="card user-info-card">
                 <div className="card-body p-4 d-flex align-items-center">
@@ -123,21 +122,21 @@ class PostProperty extends Component {
                         <i className="lni lni-home"></i>
                         <span>Select Property Type</span>
                       </div>
-                      <div className="form-group">
-                        <select
-                          className="form-control"
-                          id="exampleFormControlSelect1"
-                          name="categories_id"
-                          value={this.state.categories_id}
-                          onChange={this.handleInputChange}
-                        >
-                          {this.state.categories.map((categories) => (
-                            <option value={categories.id} key={categories.id}>
-                              {categories.name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
+                      {/*<div className="form-group">*/}
+                      {/*  <select*/}
+                      {/*    className="form-control"*/}
+                      {/*    id="exampleFormControlSelect1"*/}
+                      {/*    name="categories_id"*/}
+                      {/*    value={this.state.categories_id}*/}
+                      {/*    onChange={this.handleInputChange}*/}
+                      {/*  >*/}
+                      {/*    {this.state.categories.map((categories) => (*/}
+                      {/*      <option value={categories.id} key={categories.id}>*/}
+                      {/*        {categories.name}*/}
+                      {/*      </option>*/}
+                      {/*    ))}*/}
+                      {/*  </select>*/}
+                      {/*</div>*/}
                     </div>
                     <div className="mb-3">
                       <div className="title mb-2">
@@ -335,8 +334,8 @@ class PostProperty extends Component {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+         
+       
         <FooterApp></FooterApp>
       </div>
     );

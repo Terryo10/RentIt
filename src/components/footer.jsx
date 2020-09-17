@@ -14,7 +14,7 @@ class FooterApp extends Component {
                             <li className="active"><a href="/"><i className="lni lni-home"></i>Home</a></li>
                             <li><a href="/"><i className="lni lni-life-ring"></i>Categories</a></li>
                             
-                            <li><a href="/post"><i className="lni lni-plus"></i>PostProperty</a></li>
+                            <li><a href="/post_property"><i className="lni lni-plus"></i>PostProperty</a></li>
                             <li><a href="/settings"><i className="lni lni-cog"></i>Settings</a></li>
                         </ul>
                         </div>

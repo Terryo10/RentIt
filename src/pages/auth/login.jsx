@@ -2,6 +2,7 @@ import React, { Component } from "react";
 // import axios from "axios";
 import api from "../../apiUtils/api";
 import { Redirect } from "react-router-dom";
+// import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 class Login extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class Login extends Component {
       isLoding: false,
       error: "",
       redirect: null,
+      isLoggedIn: false,
     };
   }
 
@@ -46,7 +48,7 @@ class Login extends Component {
     });
     api
       .post("login", {
-        username: this.state.email,
+        email: this.state.email,
         password: this.state.password,
       })
       .then((res) => {
@@ -54,11 +56,19 @@ class Login extends Component {
           isLoding: false,
         });
         if (res.status === 200) {
-          localStorage.setItem("login", JSON.stringify(res.data));
-          //push to the next page here
-          console.log(res);
-          this.setState({ redirect: "/home" });
-          console.log(this.state.redirect);
+          // localStorage.setItem("login", JSON.stringify(res.data));
+          console.log(res.data)
+          //pano pane basa
+      
+
+
+
+
+
+
+
+
+          // this.setState({ redirect: "/home" });
         } else {
           this.setState({
             isloding: false,
@@ -83,7 +93,7 @@ class Login extends Component {
   validateEmail = (email) => {
     // const re = ^[a-z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1}([a-z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1})*[a-z0-9]@[a-z0-9][-\.]{0,1}([a-z][-\.]{0,1})*[a-z0-9]\.[a-z0-9]{1,}([\.\-]{0,1}[a-z]){0,}[a-z0-9]{0,}$ ;
     // const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    const re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     //email regex
     if (re.exec(email)) {
       console.log(email);
@@ -147,9 +157,10 @@ class Login extends Component {
                     <input
                       className="form-control"
                       id="username"
-                      type="text"
+                      type="email"
                       placeholder="info@example.com"
                       value={this.state.email}
+                      required
                       onChange={this.handleEmailChange}
                     ></input>
 
@@ -162,6 +173,8 @@ class Login extends Component {
                         className="form-control"
                         id="password"
                         type="password"
+                        required
+                        min="6"
                         placeholder="********************"
                         value={this.state.password}
                         onChange={this.handlePasswordChange}
@@ -172,12 +185,12 @@ class Login extends Component {
                 </form>
 
                 <div className="login-meta-data">
-                  <a href="/" className="forgot-password d-block mt-3 mb-1">
+                  <a href="/fogotpassword" className="forgot-password d-block mt-3 mb-1">
                     Forgot Password?
                   </a>
                   <p className="mb-0">
                     Didn't have an account?
-                    <a href="/" className="ml-1">
+                    <a href="/register" className="ml-1">
                       Register Now
                     </a>
                   </p>

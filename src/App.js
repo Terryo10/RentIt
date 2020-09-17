@@ -1,14 +1,13 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  
-} from "react-router-dom";
-import Homepage from './pages/home';
-import Loginpage from './pages/auth/login';
-import Settingspage from './pages/settings';
-import PostProperty from './pages/post';
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Home from "./pages/home";
+import Login from "./pages/auth/login";
+import Register from "./pages/auth/register";
+import ForgotPassword  from "./pages/auth/forgotPassword";
+import LoginPage from "./pages/auth/login";
+import SettingsPage from "./pages/settings";
+import PostProperty from "./pages/post";
+import {PrivateRoute} from "./components/privateRoute";
 
 // Some folks find value in a centralized route config.
 // A route config is just data. React is great at mapping
@@ -18,46 +17,22 @@ import PostProperty from './pages/post';
 // with `path` and `component` props, ordered the same
 // way you'd do inside a `<Switch>`.
 
-
 export default function RouteConfigExample() {
-  return (
-    <Router>
+  return(
+     <BrowserRouter>
+    <div className="App">
       <Switch>
-          <Route path="/settings">
-            <Settings />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/post">
-            <Post />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-          
-        </Switch>
-    </Router>
-  );
+        <Route exact path="/" component={Home}/>
+        <Route exact path="/home" component={Home}/>
+        <Route exact path="/login" component={Login}/>
+        <PrivateRoute exact path="/post_property" component={PostProperty}/>
+        <Route exact path="/settings" component={SettingsPage}/>
+        <Route exact path="/login" component={LoginPage}/>
+        <Route exact path="/register" component={Register}/>
+        <Route exact path="/forgot_password" component={ForgotPassword}/>
+      </Switch>
+    </div>
+  </BrowserRouter>
+  )
+ 
 }
-
-function Home() {
-return <Homepage/>;
-
-}
-
-function Login() {
-  return <Loginpage/>;
-}
-
-function Settings() {
-  return <Settingspage/>;
-}
-
-function Post() {
-  return <PostProperty/>;
-}
-
-
-
-

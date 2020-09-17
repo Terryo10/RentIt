@@ -9,7 +9,8 @@ class HeaderGlobal
 
      }
   
-    render() { 
+    render(props) { 
+      console.log(props)
         return (  
             <div className="header-area" id="headerArea">
             <div className="container h-100 d-flex align-items-center justify-content-between">

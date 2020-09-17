@@ -8,7 +8,8 @@
   "categories": ["shop", "ecommerce", "fashion"],
   "orientation": "portrait",
   "description": "RentIt House and Eastate rental app",
-  "icons": [{
+  "icons": [
+    {
       "src": "assets/img/icons/icon-72x72.png",
       "type": "image/png",
       "sizes": "72x72",
