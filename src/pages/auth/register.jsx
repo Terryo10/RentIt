@@ -13,6 +13,7 @@ class Login extends Component {
       error: "",
       redirect: null,
     };
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   register = (e) => {
@@ -73,7 +74,7 @@ class Login extends Component {
                 {/*  <div className="alert alert-danger" role="alert">*/}
                 {/*  A simple danger alert—check it out!*/}
                 {/*</div>*/}
-                  <form onSubmit={this.register}>
+                  <form onSubmit={this.register} method="POST">
                     <div className="form-group text-left mb-4">
                       <span>Username</span>
                       <label>

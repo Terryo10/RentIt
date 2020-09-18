@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-// import axios from "axios";
-import api from "../../apiUtils/api";
-import { Redirect } from "react-router-dom";
-// import {NotificationContainer, NotificationManager} from 'react-notifications';
+import {Link } from "react-router-dom";
+import {connect} from 'react-redux';
+import {login} from "../../redux/actions/AuthAction";
 
 class Login extends Component {
   constructor(props) {
@@ -15,108 +14,35 @@ class Login extends Component {
       redirect: null,
       isLoggedIn: false,
     };
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  handleEmailChange = (event) => {
+
+
+  handleInputChange = (event) => {
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
     this.setState({
-      email: event.target.value,
+      [name]: value,
     });
   };
 
-  handlePasswordChange = (event) => {
-    this.setState({
-      password: event.target.value,
-    });
-  };
-
-  login = (e) => {
-    if (
-      this.validateEmail(this.state.email) &&
-      this.validatePassword(this.state.password)
-    ) {
-      this.post();
-      e.preventDefault();
-    } else {
-      e.preventDefault();
+  login =(e)=>{
+   let loginState ={
+      email:this.state.email,
+     password: this.state.password
     }
-  };
-
-  post = async () => {
-    //start loading
-    this.setState({
-      isLoding: true,
-    });
-    api
-      .post("login", {
-        email: this.state.email,
-        password: this.state.password,
-      })
-      .then((res) => {
-        this.setState({
-          isLoding: false,
-        });
-        if (res.status === 200) {
-          // localStorage.setItem("login", JSON.stringify(res.data));
-          console.log(res.data)
-          //pano pane basa
-      
+    e.preventDefault()
+   this.props.login(loginState,this.props.history)
+  }
 
 
 
-
-
-
-
-
-          // this.setState({ redirect: "/home" });
-        } else {
-          this.setState({
-            isloding: false,
-            error: res.data.message,
-          });
-          console.log(res.data.message);
-        }
-      })
-      .catch((error) => {
-        if (error.response) {
-          // The request was made and the server responded with a status code that falls out of the range of 2xx
-          let err = error.response.data;
-          this.setState({
-            error: err.message,
-            isLoding: false,
-          });
-          console.log("zvaramba");
-        }
-      });
-  };
-
-  validateEmail = (email) => {
-    // const re = ^[a-z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1}([a-z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1})*[a-z0-9]@[a-z0-9][-\.]{0,1}([a-z][-\.]{0,1})*[a-z0-9]\.[a-z0-9]{1,}([\.\-]{0,1}[a-z]){0,}[a-z0-9]{0,}$ ;
-    // const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    //email regex
-    if (re.exec(email)) {
-      console.log(email);
-      return true;
-    }
-    alert("Please give a valid email address");
-    return false;
-  };
-
-  validatePassword = (password) => {
-    if (password.length >= 6) {
-      console.log(password);
-      return true;
-    } else {
-      alert("password should be greater than 6 characters");
-      return false;
-    }
-  };
 
   render() {
-    if (this.state.redirect) {
-      return <Redirect to={this.state.redirect} />;
-    }
+
 
     let loading = (
       <div className=" d-flex justify-content-center">
@@ -148,7 +74,7 @@ class Login extends Component {
               ></img>
 
               <div className="register-form mt-5 px-4">
-                <form onSubmit={this.login}>
+                <form method="POST" onSubmit={this.login}>
                   <div className="form-group text-left mb-4">
                     <span>Email</span>
                     <label>
@@ -159,9 +85,10 @@ class Login extends Component {
                       id="username"
                       type="email"
                       placeholder="info@example.com"
-                      value={this.state.email}
                       required
-                      onChange={this.handleEmailChange}
+                      name="email"
+                      value={this.state.email}
+                      onChange={this.handleInputChange}
                     ></input>
 
                     <div className="form-group text-left mb-4">
@@ -175,9 +102,10 @@ class Login extends Component {
                         type="password"
                         required
                         min="6"
-                        placeholder="********************"
+                        placeholder="*******"
+                        name="password"
                         value={this.state.password}
-                        onChange={this.handlePasswordChange}
+                        onChange={this.handleInputChange}
                       ></input>
                     </div>
                     <div>{action}</div>
@@ -185,14 +113,14 @@ class Login extends Component {
                 </form>
 
                 <div className="login-meta-data">
-                  <a href="/fogotpassword" className="forgot-password d-block mt-3 mb-1">
+                  <Link to="/fogotpassword" className="forgot-password d-block mt-3 mb-1">
                     Forgot Password?
-                  </a>
+                  </Link>
                   <p className="mb-0">
                     Didn't have an account?
-                    <a href="/register" className="ml-1">
+                    <Link to="/register" className="ml-1">
                       Register Now
-                    </a>
+                    </Link>
                   </p>
                 </div>
 
@@ -210,4 +138,16 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps =(state)=>{
+  return{
+    authResponse:state.auth.authResponse
+  }
+}
+
+const mapDispatchToProps =(dispatch)=>{
+  return{
+    login:(creds,history)=>dispatch(login(creds,history))
+  }
+
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Login);

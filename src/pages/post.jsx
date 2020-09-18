@@ -88,8 +88,9 @@ class PostProperty extends Component {
   render() {
     return (
       <div>
-        <HeaderGlobal></HeaderGlobal>
-        
+        <HeaderGlobal props={this.props}></HeaderGlobal>
+        <div className="page-content-wrapper">
+          <div className="container">
             <div className="profile-wrapper-area py-3">
               <div className="card user-info-card">
                 <div className="card-body p-4 d-flex align-items-center">
@@ -334,6 +335,8 @@ class PostProperty extends Component {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
          
        
         <FooterApp></FooterApp>

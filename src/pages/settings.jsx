@@ -7,7 +7,7 @@ class Settings extends Component {
     render() { 
         return ( 
             <div>
-                <Globalheader/>
+                <Globalheader props={this.props}/>
                 <div className="page-content-wrapper">
                 <div className="container">
                 <h1>Aya ndiwo ma settings</h1>
