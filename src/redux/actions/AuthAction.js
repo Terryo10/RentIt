@@ -7,12 +7,13 @@ export const signUp =(credentials)=>{
         if(credentials.password.length < 6){
             return dispatch({type: 'SHORT_PASSWORD'})
         }
+        signUpService(credentials,).then((res)=>{
 
-        signUpService(credentials).then((res)=>{
-                console.log(res.data)
                 if(res.data.token!=null){
-                    localStorage.setItem("user",'Bearer '+res.data.token);
+                    localStorage.setItem("token",res.data.token);
+                    localStorage.setItem("user",JSON.stringify(res.data.user));
                     dispatch({type:'SIGNUP_SUCCESS'})
+
                 }else {
                     dispatch({type:'SIGNUP_ERROR',res})
                 }
@@ -33,14 +34,16 @@ export const login =(credentials,history)=>{
             return dispatch({type: 'SHORT_PASSWORD'})
         }
         loginService(credentials,history).then((res)=>{
-            console.log(res.token)
+            console.log(res)
             if(res.data.token!=null){
-            localStorage.setItem("user",'Bearer '+res.data.token);
+                console.log(res.data.user)
+            localStorage.setItem("token",res.data.token);
+                localStorage.setItem("user",JSON.stringify(res.data.user));
+                history.push('/')
             dispatch({type:'LOGIN_SUCCESS'})
-                console.log(history)
                 history.push('/')
         }else {
-                    dispatch({type:'LOGIN_ERROR',res})
+                dispatch({type:'LOGIN_ERROR',res})
             }
         },
             error=>{
@@ -48,4 +51,9 @@ export const login =(credentials,history)=>{
             })
 
     }
+}
+
+export  const logout=(history)=>{
+    localStorage.clear();
+    history.props.history.push('/login')
 }

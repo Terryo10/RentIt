@@ -1,16 +1,56 @@
 import React, { Component } from 'react';
 import FooterApp from '../components/footer';
 import Globalheader from '../components/headerglobal'
+import SideBarApp from "../components/side";
+import {Link} from "react-router-dom";
 
 class Settings extends Component {
     state = {  }
-    render() { 
+    render() {
         return ( 
             <div>
                 <Globalheader props={this.props}/>
+                <SideBarApp props={this.props}/>
                 <div className="page-content-wrapper">
                 <div className="container">
-                <h1>Aya ndiwo ma settings</h1>
+                    <div className="settings-wrapper py-3">
+                        <div className="card settings-card">
+                            <div className="card-body">
+
+                                <div className="single-settings d-flex align-items-center justify-content-between">
+                                    <div className="title"><i className="lni lni-question-circle"></i><span>My Property</span></div>
+                                    <div className="data-content"><Link className="pl-4" to="/my_properties"><i className="lni lni-chevron-right"></i></Link></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card settings-card">
+                            <div className="card-body">
+
+                                <div className="single-settings d-flex align-items-center justify-content-between">
+                                    <div className="title"><i className="lni lni-heart"></i><span>My WishList</span></div>
+                                    <div className="data-content"><Link className="pl-4" to="/my_wishlist"><i className="lni lni-chevron-right"></i></Link></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card settings-card">
+                            <div className="card-body">
+                               
+                                <div className="single-settings d-flex align-items-center justify-content-between">
+                                    <div className="title"><i className="lni lni-protection"></i><span>Privacy</span></div>
+                                    <div className="data-content"><a className="pl-4" href="privacy-policy.html"><i className="lni lni-chevron-right"></i></a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card settings-card">
+                            <div className="card-body">
+                               
+                                <div className="single-settings d-flex align-items-center justify-content-between">
+                                    <div className="title"><i className="lni lni-lock"></i><span>Password<span>Updated 2 month ago</span></span></div>
+                                    <div className="data-content"><a href="change-password.html">Change<i className="lni lni-chevron-right"></i></a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 </div>
                 <FooterApp/>

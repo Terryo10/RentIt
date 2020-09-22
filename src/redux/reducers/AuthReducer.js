@@ -41,10 +41,11 @@ const AuthReducer =(state=initState,action)=>{
 
 
        case 'LOGIN_ERROR':
-           console.log(action)
+           console.log(action.res.data.message)
            return {
                ...state,
                authResponse: action.error,
+
            }
            default:
                return state

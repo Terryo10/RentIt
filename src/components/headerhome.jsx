@@ -1,12 +1,27 @@
 import React, { Component } from 'react';
-// import SideBarApp from './side';
+import {openUp} from "../redux/actions/SideBarAction";
+import {connect} from "react-redux";
+
 
 
 class HeaderHome extends Component {
-    state = { 
-        showsidebar:false
-     }
-    render() { 
+    constructor(props) {
+        super(props);
+
+        this.state={
+        pola:false
+        }
+    }
+
+    sidepop =(e)=>{
+        this.setState({
+            pola:true
+        })
+        this.props.openUp()
+
+
+    }
+    render() {
         return ( 
             <div>
                 <div className="header-area" id="headerArea">
@@ -21,14 +36,23 @@ class HeaderHome extends Component {
                         </form>
                         </div>
                 
-                        <div className="suha-navbar-toggler d-flex flex-wrap"  id="suhaNavbarToggler"><span></span><span></span><span></span></div>
+                        <div className="suha-navbar-toggler d-flex flex-wrap"  id="suhaNavbarToggler" onClick={this.sidepop}><span ></span><span></span><span></span></div>
+
                     </div>
                 </div>
             </div>
          );
     }
 }
+const mapStateToProps =(state)=>{
+    return{
+        showsidebar:state.sideBar.showsidebar
+    }
+};
 
-
- 
-export default HeaderHome;
+const mapDispatchToProps =(dispatch)=> {
+    return {
+        openUp: () => dispatch(openUp())
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(HeaderHome);

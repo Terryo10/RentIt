@@ -5,12 +5,13 @@ const api = axios.create({
 
 class Api {
   baseURL = "http://127.0.0.1:8000/api/";
-  basePicture = "";
+
 
   postData = async (addedurl, item) => {
-    const token = await localStorage.getItem('user');
+    const token = await localStorage.getItem('token');
+    console.log(token)
     let requestOptions ={
-      headers:{'Authorised':token,
+      headers:{'Authorization':`Bearer ${token}`,
       'content-type':'Application/json'},
       body:JSON.stringify(item)
     }
@@ -23,9 +24,9 @@ class Api {
   getData = async (addedurl, item) => {
     const token = await localStorage.getItem('user');
     let requestOptions ={
-      headers:{'Authorised':token,
+      headers:{'Authorization':`Bearer ${token}`,
         'content-type':'Application/json'},
-      body:JSON.stringify(item)
+      // body:JSON.stringify(item)
     }
     let data = await api.get(addedurl, item,requestOptions).then((response) => response);
 

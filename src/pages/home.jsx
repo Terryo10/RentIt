@@ -2,14 +2,17 @@ import React from "react";
 // import { Switch, Route } from "react-router-dom";
 import HeaderApp from "../components/headerhome";
 import FooterApp from "../components/footer";
+import Houses from "../components/houses";
+import SideBarApp from "../components/side";
 
 function home(props) {
   return (
     <div>
-      <HeaderApp props={props}></HeaderApp>
+      <HeaderApp></HeaderApp>
+        <SideBarApp props={props}/>
       <div className="page-content-wrapper">
         <div className="container">
-        <h1>Homepage content goes here</h1>
+            <Houses></Houses>
         </div>
       </div>
       <FooterApp></FooterApp>

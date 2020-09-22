@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
+import {openUp} from "../redux/actions/SideBarAction";
+import {connect} from 'react-redux';
 
 class HeaderGlobal
  extends Component {
-    state = { 
-        sidebar:false
-     }
-
      sidepop =()=>{
-
+        this.props.openUp()
      }
-  
+
     render() {
+
         return (  
             <div className="header-area" id="headerArea">
             <div className="container h-100 d-flex align-items-center justify-content-between">
             
-              <div className="back-button"><a href="shop-grid.html"><i className="lni lni-arrow-left"></i></a></div>
+              <div className="back-button" onClick={this.props.props.history.goBack}><i className="lni lni-arrow-left"></i></div>
               
               <div className="page-heading">
                 <h6 className="mb-0">{this.props.props.location.pathname}</h6>
@@ -28,5 +27,16 @@ class HeaderGlobal
         );
     }
 }
+const mapStateToProps =(state)=>{
+    return{
+        showsidebar:state.sideBar.showsidebar
+    }
+};
+
+const mapDispatchToProps =(dispatch)=> {
+    return {
+        openUp: () => dispatch(openUp())
+    }
+}
  
-export default HeaderGlobal;
+export default connect(mapStateToProps,mapDispatchToProps)(HeaderGlobal);

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {connect} from 'react-redux';
 import {signUp} from "../../redux/actions/AuthAction";
+import {Link} from "react-router-dom";
 
 class Login extends Component {
   constructor(props) {
@@ -130,9 +131,9 @@ class Login extends Component {
                 <div className="login-meta-data">
                   <p className="mt-3 mb-0">
                     Already have an account?
-                    <a className="ml-1" href="login">
+                    <Link className="ml-1" to="login">
                       Sign In
-                    </a>
+                    </Link>
                   </p>
                 </div>
               </div>

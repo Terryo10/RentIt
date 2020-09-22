@@ -1,54 +1,76 @@
 import React, { Component } from 'react';
+import {Link} from "react-router-dom";
+import {connect} from "react-redux";
+import {openUp} from "../redux/actions/SideBarAction";
+// import {openUp} from "../redux/actions/SideBarAction";
+import {logout} from "../redux/actions/AuthAction";
 
 
 class SideBarApp extends Component {
-    state = { 
-      sidebar:false
-     }
-    render() { 
+
+    render() {
+        if(!localStorage.getItem('user')){
+          return <div>
+
+                <div className="sidenav-black-overlay"></div>
+
+                <div className={this.props.showsidebar? "suha-sidenav-wrapper nav-active": "suha-sidenav-wrapper"} id="sidenavWrapper" >
+
+                    <div className="sidenav-profile">
+                        <div className="user-profile"><img src="/assets/img/icons/icon-96x96.png" alt=""></img></div>
+
+                    </div>
+
+                    <ul className="sidenav-nav pl-0">
+                        <li><Link to="/login"><i className="lni lni-enter"></i>Login</Link></li>
+                        <li><Link to="/Register"><i className="lni lni-direction"></i>Register</Link></li>
+                       </ul>
+
+                    <div className="go-home-btn" id="goHomeBtn"  onClick={()=>{this.props.openUp()}}><i className="lni lni-arrow-left"></i></div>
+                </div>
+            </div>
+        }
+    let user =JSON.parse(localStorage.getItem('user'))
         return (
             <div>
-                   
+
     <div className="sidenav-black-overlay"></div>
-  
-    <div className="suha-sidenav-wrapper" id="sidenavWrapper">
+
+    <div className={this.props.showsidebar? "suha-sidenav-wrapper nav-active": "suha-sidenav-wrapper"} id="sidenavWrapper" >
      
       <div className="sidenav-profile">
-        <div className="user-profile"><img src="img/bg-img/9.jpg" alt=""></img></div>
+        <div className="user-profile"><img src="/assets/img/icons/icon-96x96.png" alt=""></img></div>
         <div className="user-info">
-          <h6 className="user-name mb-0">Suha Jannat</h6>
-          <p class="available-balance">Balance <span>$<span className="counter">523.98</span></span></p>
+          <h6 className="user-name mb-0">{user.name}</h6>
         </div>
       </div>
      
-      <ul class="sidenav-nav pl-0">
-        <li><a ><i className="lni lni-user"></i>My Profile</a></li>
-        <li><a ><i className="lni lni-alarm lni-tada-effect"></i>Notifications<span className="ml-3 badge badge-warning">3</span></a></li>
-        <li class="suha-dropdown-menu"><a ><i className="lni lni-cart"></i>Shop Pages</a>
-          <ul>
-            <li><a >- Shop Grid</a></li>
-            <li><a >- Shop List</a></li>
-            <li><a >- Product Details</a></li>
-            <li><a >- Featured Products</a></li>
-            <li><a >- Flash Sale</a></li>
-          </ul>
-        </li>
-        <li><a href="pages.html"><i className="lni lni-empty-file"></i>All Pages</a></li>
-        <li class="suha-dropdown-menu"><a ><i className="lni lni-heart"></i>My Wishlist</a>
-          <ul>
-            <li><a >- Wishlist Grid</a></li>
-            <li><a >- Wishlist List</a></li>
-          </ul>
-        </li>
-        <li><a ><i className="lni lni-cog"></i>Settings</a></li>
-        <li><a ><i className="lni lni-power-switch"></i>Sign Out</a></li>
+      <ul className="sidenav-nav pl-0">
+        <li><Link to="/my_properties"><i className="lni lni-alarm lni-tada-effect"></i>My Properties</Link></li>
+          <li ><Link to="/my_wishlist"><i className="lni lni-heart"></i>My Wishlist</Link></li>
+        <li><Link to="/settings"><i className="lni lni-cog"></i>Settings</Link></li>
+          <li><a onClick={()=>{logout(this.props)}} href="/login" ><i className="lni lni-power-switch"></i>Logout</a></li>
       </ul>
      
-      <div class="go-home-btn" id="goHomeBtn"><i className="lni lni-arrow-left"></i></div>
-    </div>
+        <div className="go-home-btn" id="goHomeBtn"  onClick={()=>{this.props.openUp()}}><i className="lni lni-arrow-left"></i></div>
+            </div>
             </div>
           );
     }
 }
- 
-export default SideBarApp;
+
+const mapStateToProps =(state)=>{
+    return{
+        showsidebar:state.sideBar.showsidebar
+    }
+};
+const mapDispatchToProps =(dispatch)=> {
+    return {
+        openUp: () => dispatch(openUp())
+    }
+}
+
+
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(SideBarApp);

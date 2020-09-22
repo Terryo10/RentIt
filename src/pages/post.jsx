@@ -1,17 +1,19 @@
 import React, { Component } from "react";
 import FooterApp from "../components/footer";
 import HeaderGlobal from "../components/headerglobal";
-import api from "../apiUtils/api";
+import Api from "../apiUtils/api";
+import SideBarApp from "../components/side";
 
 class PostProperty extends Component {
   constructor(props) {
     super(props);
-    // this.getPropertyType();
+    this.getPropertyType();
     this.state = {
       location: "",
       street: "",
       city: "",
       province: "",
+      title:"",
       country: "",
       bedroom_number: "",
       toilet_number: "",
@@ -31,11 +33,12 @@ class PostProperty extends Component {
   }
   //Getting lists for selection
 
-  // getPropertyType = async () => {
-  //   let data = await api.get("/categories").then(({ data }) => data);
-  //   this.setState({ categories: data.category });
-  //   console.log(data.category);
-  // };
+  getPropertyType = async () => {
+    let api = new Api();
+    let data = await api.getData("/categories").then(({ data }) => data);
+    this.setState({ categories: data.category });
+
+  };
 
   //handling all form changes ka1
   handleInputChange(event) {
@@ -70,6 +73,8 @@ class PostProperty extends Component {
     fd.append('street',this.state.street);
     fd.append('province',this.state.province);
     fd.append('country',this.state.country);
+    fd.append('toilet_number',this.state.toilet_number);
+    fd.append('bedroom_number',this.state.bedroom_number);
     fd.append('bathroom_number',this.state.bathroom_number);
     fd.append('garage_number',this.state.garage_number);
     fd.append('description',this.state.description);
@@ -78,17 +83,27 @@ class PostProperty extends Component {
     fd.append('contact_info',this.state.contact_info);
     fd.append('categories_id',this.state.categories_id);
     fd.append('yard_size',this.state.yard_size);
-    api
-      .post("/properties",fd)
-      .then((res) => {
-        console.log(res.data);
-      });
+    fd.append('title',this.state.title);
+
+
+    const api = new Api();
+    return api.postData('properties',fd).then(data=>{
+      console.log(data)
+      this.props.history.push({pathname:'/property_added',state:data.data})
+
+        }
+
+
+    )
+
+
   };
 
   render() {
     return (
       <div>
         <HeaderGlobal props={this.props}></HeaderGlobal>
+        <SideBarApp props={this.props}/>
         <div className="page-content-wrapper">
           <div className="container">
             <div className="profile-wrapper-area py-3">
@@ -123,21 +138,35 @@ class PostProperty extends Component {
                         <i className="lni lni-home"></i>
                         <span>Select Property Type</span>
                       </div>
-                      {/*<div className="form-group">*/}
-                      {/*  <select*/}
-                      {/*    className="form-control"*/}
-                      {/*    id="exampleFormControlSelect1"*/}
-                      {/*    name="categories_id"*/}
-                      {/*    value={this.state.categories_id}*/}
-                      {/*    onChange={this.handleInputChange}*/}
-                      {/*  >*/}
-                      {/*    {this.state.categories.map((categories) => (*/}
-                      {/*      <option value={categories.id} key={categories.id}>*/}
-                      {/*        {categories.name}*/}
-                      {/*      </option>*/}
-                      {/*    ))}*/}
-                      {/*  </select>*/}
-                      {/*</div>*/}
+                      <div className="form-group">
+                        <select
+                          className="form-control"
+                          id="exampleFormControlSelect1"
+                          name="categories_id"
+                          value={this.state.categories_id}
+                          onChange={this.handleInputChange}
+                        >
+                          {this.state.categories.map((categories) => (
+                            <option value={categories.id} key={categories.id}>
+                              {categories.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="mb-3">
+                      <div className="title mb-2">
+                        <i className="lni lni-map-marker"></i>
+                        <span>Title</span>
+                      </div>
+                      <input
+                          className="form-control"
+                          type="text"
+                          name="title"
+                          placeholder="e.g House in chitungwiza"
+                          value={this.state.title}
+                          onChange={this.handleInputChange}
+                      ></input>
                     </div>
                     <div className="mb-3">
                       <div className="title mb-2">

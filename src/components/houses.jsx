@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import api from "../apiUtils/api";
+import Api from "../apiUtils/api";
+import {Link} from "react-router-dom";
+import {basePic} from "../apiUtils/picture";
 
 class Houses extends Component {
   state = {
-    houses: [],
+    properties: [],
     
   };
   constructor(props) {
@@ -11,9 +13,9 @@ class Houses extends Component {
     this.gethouses();
   }
   gethouses = async () => {
-    let data = await api.get("/properties").then(({ data }) => data);
-    this.setState({ houses: data.products });
-    console.log(data.products);
+    let api = new Api();
+    let data = await api.getData("/properties").then(({ data }) => data);
+    this.setState({ properties: data.properties });
   };
   //
   render() {
@@ -21,33 +23,31 @@ class Houses extends Component {
       <div className="weekly-best-seller-area py-3">
         <div className="container">
         <div className="row g-3">
-          {this.state.houses.map((houses) => (
-            <div key={houses.id} className="col-12 col-md-6">
+          {this.state.properties.map((property) => (
+            <div key={property.id} className="col-12 col-md-6">
               <div className="card weekly-product-card">
                 <div className="card-body d-flex align-items-center">
                   <div className="product-thumbnail-side">
                     <span className="badge badge-success">RentIt</span>
-                    
-                    <a
+
+                    <Link
                       className="product-thumbnail d-block"
-                      href="single-product.html"
+                      to={{pathname:'/single_property/',SingleProperty:property}}
                     >
-                      <img src={'http://localhost:8000/storage/property_images/'+houses.imagePath} alt=""></img>
-                    </a>
+                      <img src={basePic+property.imagePath} alt=""></img>
+                    </Link>
                   </div>
                   <div className="product-description">
-                    <a className="product-title d-block" href="/">
-                      {houses.city}
-                    </a>
+                    <Link to={{pathname:'/single_property/',SingleProperty:property}} className="product-title d-block" href="/">
+                      {property.title}
+                    </Link>
                     <p className="sale-price">
-                      <i className="lni lni-dollar"></i>${houses.price}<span>$89</span>
+                      <i className="lni lni-dollar"></i>{property.price}
                     </p>
-                    <div className="product-rating">
-                      <i className="lni lni-star-filled"></i>4.88 (39)
-                    </div>
-                    <a className="btn btn-success btn-sm add2cart-notify" href="/">
-                      <i className="mr-1 lni lni-cart"></i>Buy Now
-                    </a>
+
+                    <Link to={{pathname:'/single_property/',SingleProperty:property}} className="btn btn-success btn-sm add2cart-notify">
+                      <i className="mr-1 lni lni-travel"></i>View Property
+                    </Link>
                   </div>
                 </div>
               </div>
