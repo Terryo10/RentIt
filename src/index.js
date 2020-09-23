@@ -7,8 +7,8 @@ import {createStore,applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import RootReducer from './redux/reducers/RootReducer';
 import thunk from 'redux-thunk';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 
 const store = createStore(RootReducer,applyMiddleware(thunk));
@@ -16,7 +16,7 @@ function render(){
     ReactDOM.render(
         <Provider store={store}>
             <App>
-                <ToastContainer />
+                {/* <ToastContainer /> */}
             </App>
         </Provider>,
         document.getElementById('root')

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {openUp} from "../redux/actions/SideBarAction";
 import {connect} from "react-redux";
+import {Link} from "react-router-dom";
 
 
 
@@ -27,7 +28,7 @@ class HeaderHome extends Component {
                 <div className="header-area" id="headerArea">
                     <div className="container h-100 d-flex align-items-center justify-content-between">
                         
-                        <div className="logo-wrapper"></div>
+                    <div className="logo-wrapper"><Link to="/"><img src="assets/img/core-img/rentit.png" style={{"height":"40px"}} alt=""></img></Link></div>
                     
                         <div className="top-search-form">
                         <form action="#" method="">

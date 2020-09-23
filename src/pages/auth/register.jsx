@@ -62,11 +62,12 @@ class Login extends Component {
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-12 col-sm-9 col-md-7 col-lg-6 col-xl-5">
-                <img
-                  className="big-logo"
-                  src="assets/img/core-img/logo-white.png"
-                  alt=""
-                ></img>
+              <img
+                className="big-logo"
+                src="/assets/img/core-img/rentit.png"
+                alt=""
+                style={{"height":"150px"}}
+              ></img>
 
 
 

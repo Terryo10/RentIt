@@ -16,6 +16,8 @@ import PropertyAdded from "./components/propertyAdded";
 import {LoggedInRoute} from "./components/alreadyLoggedInRoute";
 import MyProperties from "./pages/myProperties";
 import MyWishlist from "./pages/wishlist";
+import DetailProperty from "./components/PropertyContactDetails";
+// import PayService from "./pages/payments/payservice";
 
 // Some folks find value in a centralized route config.
 // A route config is just data. React is great at mapping
@@ -33,11 +35,13 @@ export default function RouteConfigExample() {
         <Route exact path="/"  name="Home" component={Home}/>
         <Route exact path="/home" name="Home" component={Home}/>
         <Route exact path="/login" name="Login"component={Login}/>
+        {/*<PrivateRoute exact path="/make_payment" name="Make Payment" component={PayService}/>*/}
         <PrivateRoute exact path="/my_properties" name="My properties" component={MyProperties}/>
         <PrivateRoute exact path="/my_wishlist"name="My WishList" component={MyWishlist}/>
         <PrivateRoute exact path="/post_property"name="PostProperty" component={PostProperty}/>
         <PrivateRoute exact path="/property_added"name="PropertyAdded" component={PropertyAdded}/>
         <Route exact path="/single_property" name="SingleProperty" component={SingleProperty}/>
+        <PrivateRoute exact path="/property_details" name="My properties" component={DetailProperty}/>
         <PrivateRoute exact path="/settings" name="Settings" component={SettingsPage}/>
         <Route exact path="/categories" name="Categories" component={Category}/>
         <Route path="/single_category" name="Single Category" component={CategorySingle}/>

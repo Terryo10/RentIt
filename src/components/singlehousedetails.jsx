@@ -2,16 +2,17 @@ import React, { Component } from 'react';
 import HeaderGlobal from "./headerglobal";
 import FooterApp from "./footer";
 import SideBarApp from "./side";
-import { Redirect} from "react-router-dom";
+import { Link, Redirect} from "react-router-dom";
 import {basePic} from "../apiUtils/picture";
+// import DetailsProperty from "./PropertyContactDetails";
+
+
 class SingleProperty extends Component {
     state = {
         backgroundImage:""
     }
 
-    getPropertyDetails=(params)=>{
-        console.log('i was clicked')
-    }
+   
 
     something=()=>{
         console.log('overide')
@@ -43,9 +44,12 @@ class SingleProperty extends Component {
                                     <h6 className="mb-1">{kwatabva.title}</h6>
                                     <p className="sale-price mb-0">${kwatabva.price}</p>
                                     <p >{kwatabva.day_or_month}</p>
-                                    <button  className="btn btn-success ml-3" onClick={()=>{this.getPropertyDetails(this.props)}}><i className="lni lni-phone"></i> View Location & Contact Details</button>
+                                    <Link to={{pathname:'/property_details/',property:kwatabva}}>
+                                    <button  className="btn btn-success ml-3" ><i className="lni lni-phone"></i> View Location & Contact Details</button>
+                                    </Link>
+                                  
                                 </div>
-                                <div className="p-wishlist-share"><a  onClick={()=>{this.something()}}><i
+                                <div className="p-wishlist-share"><a href="/wishlist" onClick={()=>{this.something()}}><i
                                     className="lni lni-heart"></i></a></div>
                             </div>
                         </div>
