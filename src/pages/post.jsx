@@ -88,10 +88,19 @@ class PostProperty extends Component {
 
     const api = new Api();
     return api.postData('properties',fd).then(data=>{
-      console.log(data)
-      this.props.history.push({pathname:'/property_added',state:data.data})
+      if(data.status ===200){
+          this.props.history.push({pathname:'/property_added',state:data.data})
+      }else if(data.status ===218){
+            console.log('subscribe to post')
+      }else if (data.status ===217){
+          console.log('expired subscription')
+      }
+        else if (data.status ===215){
+          console.log('Your subscription is not active')
+      }
 
-        }
+
+    }
 
 
     )

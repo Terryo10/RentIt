@@ -1,10 +1,10 @@
   import axios from "axios";
 const api = axios.create({
-  baseURL: "http://192.168.8.101:5000/api/",
+  baseURL: "http://127.0.0.1:8000/api/",
 });
 
 class Api {
-  baseURL = "http://192.168.8.101:5000/api/";
+  baseURL = "http://127.0.0.1:8000/api/";
 
 
   postData = async (addedurl, item) => {

@@ -11,7 +11,6 @@ export const propertyDetails=(props)=>{
                 dispatch({type:'SUBSCRIBE',res})
             } else if (res.status === 215) {
                 console.log('Your subscription is not active')
-
                 dispatch({type:'ACTIVATE_SUBSCRIPTION',res})
             } else if (res.status === 216) {
                 console.log('Your subscription has expired please renew')

@@ -3,6 +3,9 @@ import FooterApp from "../../components/footer";
 import SideBarApp from "../../components/side";
 import HeaderGlobal from "../../components/headerglobal";
 import Api from "../../apiUtils/api";
+import {PaymentAction} from "../../redux/actions/PaymentAction";
+import {connect} from "react-redux"
+
 
 class PayService extends Component{
     constructor(props) {
@@ -10,7 +13,7 @@ class PayService extends Component{
         this.getpackage()
         this.state={
             phone_number:"",
-            method:"",
+            method:"ecocash",
             price:""
         }
 
@@ -27,15 +30,21 @@ class PayService extends Component{
 
     makePayment=(e)=>{
         e.preventDefault()
-        console.log(this.state)
+        let method ={
+            method:this.state.method,
+            phone_number: this.state.phone_number
+        }
+
+      this.props.PaymentAction(method)
 
     }
     getpackage =async ()=>{
         console.log('loading started')
         let api = new Api();
-        let data = await api.getData("/get_price").then(console.log('stop loading'),({ data }) => data);
+        let data = await api.getData("/get_price").then(({ data }) => data);
 
         this.setState({ price: data.price });
+        console.log('stop loading')
     }
 
     render() {
@@ -82,7 +91,7 @@ class PayService extends Component{
                                                 required
                                                 value={this.state.method}
                                                 onChange={this.handleSelectInputChange}>
-                                                <option value="ecocash" >Ecocash</option>
+                                                <option value="ecocash"  defaultValue>Ecocash</option>
                                                 <option value="onemoney" >OneMoney</option>
                                             </select>
                                         </div>
@@ -101,5 +110,16 @@ class PayService extends Component{
     }
 
 }
+const mapStateToProps =(state)=>{
+    return{
+        payment:state.makepayment
+    }
+};
+const mapDispatchToProps =(dispatch)=> {
+    return {
+        PaymentAction: (paymentdetails)=> dispatch(PaymentAction(paymentdetails))
 
-export default PayService;
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(PayService);
