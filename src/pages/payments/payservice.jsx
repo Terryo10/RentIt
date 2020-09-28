@@ -5,6 +5,7 @@ import HeaderGlobal from "../../components/headerglobal";
 import Api from "../../apiUtils/api";
 import {PaymentAction} from "../../redux/actions/PaymentAction";
 import {connect} from "react-redux"
+import Loading from "../../components/loading";
 
 
 class PayService extends Component{
@@ -22,6 +23,11 @@ class PayService extends Component{
 
     handlePhoneInputChange=(event)=>{
         this.setState({phone_number: event.target.value});
+        if(this.state.phone_number > 9){
+            this.setState({
+                button:true
+            })
+        }
     }
 
     handleSelectInputChange=(event)=>{
@@ -32,19 +38,25 @@ class PayService extends Component{
         e.preventDefault()
         let method ={
             method:this.state.method,
-            phone_number: this.state.phone_number
+            phone_number: this.state.phone_number,
+            loading:true
+
         }
 
       this.props.PaymentAction(method)
 
     }
     getpackage =async ()=>{
-        console.log('loading started')
+
         let api = new Api();
         let data = await api.getData("/get_price").then(({ data }) => data);
 
-        this.setState({ price: data.price });
-        console.log('stop loading')
+        this.setState({
+            price: data.price,
+            loading:false,
+            button:""
+        });
+
     }
 
     render() {
@@ -58,7 +70,7 @@ class PayService extends Component{
                             <div className="credit-card-info-wrapper"><img className="d-block mb-4" src="/assets/img/bg-img/credit-card.png" alt=""></img>
 
                                <div>
-                                   <h6 className="text-align-center">Subscription Amount is ${this.state.price} valid for One Month</h6>
+                                   <h6 className="text-align-center">Subscription Amount is {this.state.loading? <Loading/> :"$"+this.state.price} valid for One Month</h6>
                                </div>
 
 
@@ -96,9 +108,11 @@ class PayService extends Component{
                                             </select>
                                         </div>
                                         </div>
-
-                                        <button className="btn btn-warning btn-lg w-100" type="submit">Pay Now</button>
-                                    </form>
+                                        {this.props.paymentLoading?
+                                            <h6>Payment Loading check your phone...</h6>:
+                                            <button className="btn btn-warning btn-lg w-100" type="submit" >Pay Now</button>
+                                        }
+                                        </form>
                                 </div>
                             </div>
                         </div>
@@ -112,7 +126,8 @@ class PayService extends Component{
 }
 const mapStateToProps =(state)=>{
     return{
-        payment:state.makepayment
+        subscriptionmade:state.makepayment.subscriptionmade,
+        paymentLoading:state.makepayment.paymentLoading,
     }
 };
 const mapDispatchToProps =(dispatch)=> {

@@ -2,23 +2,33 @@ import React, { Component } from "react";
 import Api from "../apiUtils/api";
 import {Link} from "react-router-dom";
 import {basePic} from "../apiUtils/picture";
+import Loading from "./loading";
+
 
 class Houses extends Component {
-  state = {
-    properties: [],
-    
-  };
+
   constructor(props) {
     super(props);
     this.gethouses();
+    this.state = {
+      properties: [],
+      isLoading:true,
+
+    };
   }
   gethouses = async () => {
     let api = new Api();
     let data = await api.getData("/properties").then(({ data }) => data);
-    this.setState({ properties: data.properties });
+    this.setState({
+      isLoading:false,
+      properties: data.properties
+    })
   };
   //
   render() {
+    if(this.state.isLoading === true){
+     return <Loading props={this.props}/>
+    }
     return (
       <div className="weekly-best-seller-area py-3">
         <div className="container">

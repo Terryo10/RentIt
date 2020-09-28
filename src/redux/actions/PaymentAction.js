@@ -3,10 +3,10 @@ import {paymentService} from "../../apiUtils/paymentService";
 export const PaymentAction=(paymentdetails)=>{
     console.log(paymentdetails)
     return (dispatch)=>{
-        console.log('started  payment')
+        dispatch({type:'PAYMENT_LOADING'})
       paymentService(paymentdetails).then((res)=>{
           if(res.status === 200) {
-              console.log('stop loading')
+              dispatch({type:'STOP_PAYMENT_LOADING'})
               dispatch({type:'SUCCESSFUL_SUBSCRIPTION',res})
           }else if(res.status === 214){
               console.log('Please Subscribe to view details')

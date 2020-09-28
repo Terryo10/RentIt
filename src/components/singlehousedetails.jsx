@@ -25,7 +25,7 @@ class SingleProperty extends Component {
         let kwatabva = this.props.location.SingleProperty;
         let ngongo = basePic;
         let SinglePro =ngongo+kwatabva.imagePath;
-        console.log(SinglePro)
+
         return (
             <div>
                 <HeaderGlobal props={this.props}/>

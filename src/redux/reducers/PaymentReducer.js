@@ -1,5 +1,6 @@
 const  initState = {
-    subscriptionmade:false
+    subscriptionmade:false,
+    paymentLoading:false
 };
 
 const PaymentReducer =(state= initState,action)=>{
@@ -10,6 +11,20 @@ const PaymentReducer =(state= initState,action)=>{
             return {
                 ...state,
                 subscriptionmade: !state.subscriptionmade
+
+            }
+        case 'PAYMENT_LOADING':
+            console.log(action);
+            console.log('payment is loading now')
+            return {
+                ...state,
+                paymentLoading: !state.paymentLoading
+
+            }
+        case 'STOP_PAYMENT_LOADING':
+            return {
+                ...state,
+                paymentLoading: false
 
             }
         default:

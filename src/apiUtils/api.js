@@ -1,22 +1,27 @@
   import axios from "axios";
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8000/api/",
+  baseURL: "https://api.rentit.co.zw/api/",
+  method: "POST"
 });
 
 class Api {
-  baseURL = "http://127.0.0.1:8000/api/";
-
+  baseURL = "https://api.rentit.co.zw/api/";
+  postLoginData = async (addedurl, item) => {
+    // console.log(token)
+    let data = await api.post(addedurl,item).then((response) => response);
+    console.log(data)
+    return data;
+  }
 
   postData = async (addedurl, item) => {
     const token = await localStorage.getItem('token');
     // console.log(token)
+    console.log(item)
     let requestOptions ={
-      headers:{'Authorization':`Bearer ${token}`,
-      'content-type':'Application/json'},
-      body:JSON.stringify(item)
+      headers:{'Authorization':`Bearer ${token}`, 'content-type':'Application/json'},
     }
 
-    let data = await api.post(addedurl, item,requestOptions).then((response) => response);
+    let data = await api.post(addedurl,item,requestOptions).then((response) => response);
       console.log(data)
       return data;
   }
@@ -27,7 +32,7 @@ class Api {
     let requestOptions ={
       headers:{'Authorization': `Bearer ${token}`,
         'content-type':'Application/json'},
-      body:JSON.stringify(item)
+      // body:JSON.stringify(item)
     }
     let data = await api.get(addedurl,requestOptions, item).then((response) => response);
 

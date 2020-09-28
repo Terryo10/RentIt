@@ -12,7 +12,7 @@ function home(props) {
         <SideBarApp props={props}/>
       <div className="page-content-wrapper">
         <div className="container">
-            <Houses></Houses>
+            <Houses props={props}/>
         </div>
       </div>
       <FooterApp></FooterApp>

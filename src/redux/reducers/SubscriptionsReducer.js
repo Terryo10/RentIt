@@ -2,7 +2,8 @@ const initState = {
     details:[],
     subscribe:false,
     activateSubscription:false,
-    updateSubscription:false
+    updateSubscription:false,
+    loading:false
 };
 
 const SubscriptionsReducer=(state= initState,action)=>{
@@ -31,6 +32,17 @@ const SubscriptionsReducer=(state= initState,action)=>{
             return {
                 // notify through a notification package
             }
+        case 'LOADING':
+            return{
+                ...state,
+                loading:true
+            }
+        case 'STOP_LOADING':
+            return{
+                ...state,
+                loading:false
+            }
+
 
         default:
             return state

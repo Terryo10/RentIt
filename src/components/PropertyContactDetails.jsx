@@ -6,6 +6,9 @@ import {Link, Redirect} from "react-router-dom";
 import {propertyDetails} from "../redux/actions/SubscriptionAction";
 import {connect} from "react-redux";
 import PayService from "../pages/payments/payservice";
+import ActivateSubscription from "./subscription handlers/activateSubscription";
+import UpdateSubscription from "./subscription handlers/updateSubscription";
+import Loading from "./loading";
 
 
 class DetailsProperty extends Component {
@@ -13,6 +16,7 @@ class DetailsProperty extends Component {
   constructor(props){
     super(props)
     this.getDetails()
+
   }
 
   getDetails=async()=>{
@@ -26,20 +30,21 @@ class DetailsProperty extends Component {
 
     if(this.props.location.property == null){
         return <Redirect to={{pathname: '/home'}}/>
-    }else if(this.props.subscribe === true){
+    }else if(this.props.loading === true){
+            return ( <div>
+                <HeaderGlobal props={this.props} />
+                <SideBarApp props={this.props} />
+                        <Loading/>
+                        <FooterApp/>
+                        </div>
+           );
+    }
+    else if(this.props.subscribe === true){
        return <PayService props={this.props}/>
     }else if(this.props.activateSubscription === true){
-        return (
-            <div>
-                <h1>activate subscription</h1>
-            </div>
-        )
+        return <ActivateSubscription props={this.props}/>
     }else if(this.props.updateSubscription === true){
-        return (
-            <div>
-                <h1>update subscription</h1>
-            </div>
-        )
+        return <UpdateSubscription props={this.props}/>
     }
     return (
       <div>
@@ -100,7 +105,8 @@ const mapStateToProps =(state)=>{
         details:state.subscription.details,
         subscribe:state.subscription.subscribe,
         activateSubscription:state.subscription.activateSubscription,
-        updateSubscription:state.subscription.updateSubscription
+        updateSubscription:state.subscription.updateSubscription,
+        loading:state.subscription.loading
     }
 };
 const mapDispatchToProps =(dispatch)=> {
