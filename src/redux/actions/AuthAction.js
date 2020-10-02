@@ -1,6 +1,7 @@
 import {signUpService} from '../../apiUtils/AuthService'
 import {loginService} from "../../apiUtils/AuthService";
 
+
 export const signUp =(credentials)=>{
     console.log(credentials)
     return (dispatch)=>{
@@ -34,19 +35,27 @@ export const login =(credentials,history)=>{
             return dispatch({type: 'SHORT_PASSWORD'})
         }
         loginService(credentials,history).then((res)=>{
-            console.log(res)
             if(res.data.token!=null){
                 console.log(res.data.user)
             localStorage.setItem("token",res.data.token);
                 localStorage.setItem("user",JSON.stringify(res.data.user));
-                history.push('/')
+                
             dispatch({type:'LOGIN_SUCCESS'})
-                history.push('/')
+            dispatch({type:'SUCCESS',message:"Logged in please wait..."})
+              
+                setTimeout(() => {
+                      history.push('/')
+                  }, 5000);
+
         }else {
+            
                 dispatch({type:'LOGIN_ERROR',res})
+                dispatch({type:'ERROR',res})
+               
             }
         },
             error=>{
+                console.log('falling')
                 dispatch({type:'CODE_ERROR',error})
             })
 

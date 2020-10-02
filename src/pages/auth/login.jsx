@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import {Link } from "react-router-dom";
 import {connect} from 'react-redux';
 import {login} from "../../redux/actions/AuthAction";
+import Notify from "../../redux/services/notificate";
+import { ToastContainer} from 'react-toastify';
 
 class Login extends Component {
   constructor(props) {
@@ -39,11 +41,21 @@ class Login extends Component {
   }
 
 
+  
 
+  
+  render() {  
+    if(this.props.type === 'error'){
+      let notif= new Notify()
+      notif.error(this.props.message)
+    }
+    if(this.props.type === 'success'){
+      let notif= new Notify()
+      notif.success(this.props.message)
+    }
+    
 
-  render() {
-
-
+  
     let loading = (
       <div className=" d-flex justify-content-center">
         <div className="spinner-border text-dark " role="status">
@@ -62,8 +74,11 @@ class Login extends Component {
       );
     }
     return (
+     
+
       <div className="login-wrapper d-flex align-items-center justify-content-center text-center">
         <div className="background-shape"></div>
+        <ToastContainer />
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-12 col-sm-9 col-md-7 col-lg-6 col-xl-5">
@@ -141,7 +156,9 @@ class Login extends Component {
 
 const mapStateToProps =(state)=>{
   return{
-    authResponse:state.auth.authResponse
+    authResponse:state.auth.authResponse,
+    message:state.notification.message,
+    type:state.notification.type
   }
 }
 

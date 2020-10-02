@@ -3,6 +3,7 @@ import HeaderGlobal from "../headerglobal";
 import SideBarApp from "../side";
 import FooterApp from "../footer";
 import Api from "../../apiUtils/api";
+import Loading from "../loading";
 
 class activateSubscription extends Component{
     constructor(props) {
@@ -29,6 +30,20 @@ class activateSubscription extends Component{
             }
         )
     }
+
+    activateSubscription=()=>{
+
+        this.setState({
+            Pageloading:true,
+        })
+        setTimeout(() => {
+           this.setState({
+               Pageloading:false
+           })
+            console.log('finished loading')
+        }, 5000);
+
+    }
 render() {
     return (
         <div>
@@ -37,7 +52,7 @@ render() {
             <div className="page-content-wrapper">
                 <div className="container">
                     <br></br>
-                    {this.state.Pageloading? <div>Loading Subscription Details....</div> :
+                    {this.state.Pageloading? <Loading/> :
                         <div className="card user-data-card">
                             <div className="card-body">
                                 <div className="single-profile-data d-flex align-items-center justify-content-between">
@@ -49,8 +64,7 @@ render() {
                                 <div className="single-profile-data d-flex align-items-center justify-content-between">
                                     <div className="title d-flex align-items-center"><i className="lni lni-star"></i><span>If you have already paid click here to activate</span>
                                     </div>
-                                    <div className="data-content"><a className="btn btn-danger btn-sm"
-                                                                     href="my-order.html">Activate</a></div>
+                                    <div className="data-content"><button className="btn btn-danger btn-sm" onClick={this.activateSubscription}>Activate</button></div>
                                 </div>
                                 <div className="single-profile-data d-flex align-items-center justify-content-between">
                                     <div className="title d-flex align-items-center"><i className="lni lni-star"></i><span>If you have not payed yet click here to pay & renew your subscription</span>

@@ -27,7 +27,7 @@ class DetailsProperty extends Component {
     // this.setState({ details: data.properties });
   }
   render() {
-
+    console.log(this.props)
     if(this.props.location.property == null){
         return <Redirect to={{pathname: '/home'}}/>
     }else if(this.props.loading === true){
