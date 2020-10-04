@@ -8,6 +8,7 @@ export const PaymentAction=(paymentdetails)=>{
           if(res.status === 200) {
               dispatch({type:'STOP_PAYMENT_LOADING'})
               dispatch({type:'SUCCESSFUL_SUBSCRIPTION',res})
+              dispatch({type:'SUBSCRIBED'})
           }else if(res.status === 214){
               console.log('Please Subscribe to view details')
               dispatch({type:'SUCCESSFUL_SUBSCRIPTION',res})

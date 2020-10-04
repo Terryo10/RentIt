@@ -18,6 +18,10 @@ class DetailsProperty extends Component {
     this.getDetails()
 
   }
+  componentDidUpdate(prevProps){
+    console.log('fired')
+    
+  }
 
   getDetails=async()=>{
       if(this.props.location.property == null){
@@ -27,7 +31,6 @@ class DetailsProperty extends Component {
     // this.setState({ details: data.properties });
   }
   render() {
-    console.log(this.props)
     if(this.props.location.property == null){
         return <Redirect to={{pathname: '/home'}}/>
     }else if(this.props.loading === true){
