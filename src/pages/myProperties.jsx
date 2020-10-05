@@ -3,6 +3,8 @@ import HeaderGlobal from "../components/headerglobal";
 import FooterApp from "../components/footer";
 import SideBarApp from "../components/side";
 import Api from "../apiUtils/api";
+import {Link} from "react-router-dom";
+import {basePic} from "../apiUtils/picture";
 
 class MyProperties extends Component{
     constructor(props) {
@@ -29,11 +31,39 @@ class MyProperties extends Component{
           <SideBarApp props={this.props}/>
                 <div className="page-content-wrapper">
                     <div className="container">
-                        <ul>
-                            {this.state.properties.map((properties)=>(
-                                <li key={properties.id}>{properties.title}</li>
+                    <div className="row g-3">
+                            {this.state.properties.map((property)=>(
+                                  <div key={property.id} className="col-12 col-md-6">
+                                  <div className="card weekly-product-card">
+                                    <div className="card-body d-flex align-items-center">
+                                      <div className="product-thumbnail-side">
+                                        <span className="badge badge-success">RentIt</span>
+                    
+                                        <Link
+                                          className="product-thumbnail d-block"
+                                          to={{pathname:'/single_property/',SingleProperty:property}}
+                                        >
+                                          <img src={basePic+property.imagePath} alt=""></img>
+                                        </Link>
+                                      </div>
+                                      <div className="product-description">
+                                        <Link to={{pathname:'/single_property/',SingleProperty:property}} className="product-title d-block" href="/">
+                                          {property.title}
+                                        </Link>
+                                        <p className="sale-price">
+                                          <i className="lni lni-dollar"></i>{property.price}
+                                        </p>
+                    
+                                        <Link to={{pathname:'/single_property/',SingleProperty:property}} className="btn btn-success btn-sm add2cart-notify">
+                                          <i className="mr-1 lni lni-travel"></i>View Property
+                                        </Link>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              
                             ))}
-                        </ul>
+                        </div>
                     </div>
                 </div>
           <FooterApp/>

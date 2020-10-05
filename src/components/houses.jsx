@@ -39,7 +39,6 @@ class Houses extends Component {
                 <div className="card-body d-flex align-items-center">
                   <div className="product-thumbnail-side">
                     <span className="badge badge-success">RentIt</span>
-
                     <Link
                       className="product-thumbnail d-block"
                       to={{pathname:'/single_property/',SingleProperty:property}}
@@ -56,7 +55,7 @@ class Houses extends Component {
                     </p>
 
                     <Link to={{pathname:'/single_property/',SingleProperty:property}} className="btn btn-success btn-sm add2cart-notify">
-                      <i className="mr-1 lni lni-travel"></i>View Property
+                      <i className="mr-1 lni lni-travel"></i>Edit Property
                     </Link>
                   </div>
                 </div>

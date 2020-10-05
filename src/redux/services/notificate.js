@@ -3,16 +3,12 @@ import {toast} from 'react-toastify';
 
 class Notify {
     
-    error =  (message) => {
-      console.log(message)
-      
+    error =  (message) => {    
       toast.error(message)
       
     }
 
     success =  (message) => {
-      console.log(message)
-      
       toast.success(message)
       
     }
