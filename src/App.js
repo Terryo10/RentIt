@@ -38,7 +38,7 @@ export default function RouteConfigExample() {
         <PrivateRoute exact path="/property_details" name="My properties" component={DetailProperty}/>
         <PrivateRoute exact path="/settings" name="Settings" component={SettingsPage}/>
         <Route exact path="/categories" name="Categories" component={Category}/>
-        <Route path="/single_category" name="Single Category" component={CategorySingle}/>
+        <Route path="/single_category/:category_id" name="Single Category" component={CategorySingle}/>
         <Route exact path="/login" name="Login" component={LoginPage}/>
         <LoggedInRoute exact path="/register" name="Register" component={Register}/>
         <Route exact path="/forgot_password" name="ForgotPassword" component={ForgotPassword}/>

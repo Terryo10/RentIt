@@ -23,6 +23,11 @@ const SubscriptionsReducer = (state = initState, action) => {
         ...state,
         activateSubscription: true,
       };
+    case "ACTIVATED_SUBSCRIPTION":
+      return {
+        ...state,
+        activateSubscription: false,
+      };
     case "SUBSCRIBED":
       return {
         ...state,

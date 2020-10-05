@@ -4,11 +4,14 @@ import {connect} from 'react-redux';
 
 class HeaderGlobal
  extends Component {
+     
      sidepop =()=>{
         this.props.openUp()
      }
+     
 
     render() {
+       
 
         return (  
             <div className="header-area" id="headerArea">

@@ -4,6 +4,11 @@ import FooterApp from "./footer";
 import SideBarApp from "./side";
 
 class CategorySingle extends Component{
+    constructor(props){
+        super(props)
+        console.log(props)
+    }
+   
     render() {
         return(
             <div>

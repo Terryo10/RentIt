@@ -4,11 +4,14 @@ import SideBarApp from "../side";
 import FooterApp from "../footer";
 import Api from "../../apiUtils/api";
 import Loading from "../loading";
+import {connect} from 'react-redux';
+import {CheckPayment} from "../../redux/actions/PaymentAction";
 
 class activateSubscription extends Component{
     constructor(props) {
         super(props);
         this.setUserSubscription()
+        console.log(props)
         this.state={
             subscription:[],
             Pageloading:true
@@ -32,17 +35,19 @@ class activateSubscription extends Component{
     }
 
     activateSubscription=()=>{
-
         this.setState({
             Pageloading:true,
         })
-        setTimeout(() => {
-           this.setState({
-               Pageloading:false
-           })
-            console.log('finished loading')
-        }, 5000);
+        this.props.CheckPayment()
+    }
 
+    componentDidUpdate(prevProps){
+        console.log(prevProps)
+        if(prevProps.props.subscriptionmade===false){
+            this.setState({
+                Pageloading:false
+            })
+        }
     }
 render() {
     return (
@@ -83,5 +88,17 @@ render() {
     )
 }
 }
+const mapStateToProps =(state)=>{
+    return{
+        subscriptionmade:state.makepayment.subscriptionmade,
+        paymentLoading:state.makepayment.paymentLoading,
+    }
+};
+const mapDispatchToProps =(dispatch)=> {
+    return {
+        CheckPayment: ()=> dispatch(CheckPayment())
 
-export default activateSubscription;
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps) (activateSubscription);

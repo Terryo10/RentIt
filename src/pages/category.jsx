@@ -9,6 +9,7 @@ class Category extends Component {
     constructor(props) {
         super(props);
         this.getCategories();
+        
         this.state={
             categories:[]
         }
@@ -24,7 +25,7 @@ class Category extends Component {
 
     }
     render() {
-
+    
         return (
             <div>
                 <Globalheader props={this.props}/>
@@ -34,7 +35,7 @@ class Category extends Component {
                     <div className="container">
                         <ul className="page-nav pl-0">
                             {this.state.categories.map((categories)=>(
-                                <li key={categories.id}><Link to='/single_category'>{categories.name}<i className="lni lni-chevron-right"></i></Link></li>
+                                <li key={categories.id}><Link to={'single_category/'+categories.id}>{categories.name}<i className="lni lni-chevron-right"></i></Link></li>
                             ))}
 
                         </ul>

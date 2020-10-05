@@ -18,10 +18,7 @@ class DetailsProperty extends Component {
     this.getDetails()
 
   }
-  componentDidUpdate(prevProps){
-    console.log('fired')
-    
-  }
+
 
   getDetails=async()=>{
       if(this.props.location.property == null){

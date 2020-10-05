@@ -1,4 +1,5 @@
 import {paymentService} from "../../apiUtils/paymentService";
+import {checkPayment} from "../../apiUtils/paymentService";
 
 export const PaymentAction=(paymentdetails)=>{
     console.log(paymentdetails)
@@ -21,5 +22,20 @@ export const PaymentAction=(paymentdetails)=>{
           }
       })
 
+    }
+}
+
+export const CheckPayment=()=>{
+    return (dispatch)=>{
+        checkPayment().then((res)=>{
+            if(res.status === 200) {
+                console.log('activated subscription')
+                dispatch({type:'ACTIVATED_SUBSCRIPTION'})
+            }else if(res.status === 222){
+                dispatch({type:'CANCELLED_TRANSACTION'})
+            }else if(res.status === 223){
+                dispatch({type:'TRANSACTION_SENT'})
+            }
+        })
     }
 }
