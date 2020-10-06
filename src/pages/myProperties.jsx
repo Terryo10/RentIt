@@ -5,13 +5,15 @@ import SideBarApp from "../components/side";
 import Api from "../apiUtils/api";
 import {Link} from "react-router-dom";
 import {basePic} from "../apiUtils/picture";
+import Loading from "../components/loading";
 
 class MyProperties extends Component{
     constructor(props) {
         super(props);
         this.userProfile();
         this.state={
-            properties:[]
+            properties:[],
+            loading:true
         }
     }
 
@@ -19,9 +21,10 @@ class MyProperties extends Component{
         let api = new Api();
         console.log('loading started')
         let data = await api.getData("/my_properties").then(({ data }) => data);
-        console.log('stop loding')
-        console.log(data)
-        this.setState({ properties: data.property });
+        this.setState({
+           properties: data.property ,
+           loading:false
+          });
     }
 
     render() {
@@ -31,6 +34,7 @@ class MyProperties extends Component{
           <SideBarApp props={this.props}/>
                 <div className="page-content-wrapper">
                     <div className="container">
+                      {this.state.loading?<Loading/>:
                     <div className="row g-3">
                             {this.state.properties.map((property)=>(
                                   <div key={property.id} className="col-12 col-md-6">
@@ -55,8 +59,16 @@ class MyProperties extends Component{
                                         </p>
                     
                                         <Link to={{pathname:'/single_property/',SingleProperty:property}} className="btn btn-success btn-sm add2cart-notify">
-                                          <i className="mr-1 lni lni-travel"></i>View Property
+                                          <i className="mr-1 lni lni-travel"></i>Edit Property
                                         </Link>
+                                        <br></br>
+                                        {property.taken? <h1>kkkk</h1>:
+                                        <Link to={{pathname:'/single_property/',SingleProperty:property}} className="btn btn-success btn-sm add2cart-notify">
+                                        <i className="mr-1 lni lni-travel"></i>Set as Taken
+                                      </Link>
+                                        }
+                                        
+                                        
                                       </div>
                                     </div>
                                   </div>
@@ -64,6 +76,7 @@ class MyProperties extends Component{
                               
                             ))}
                         </div>
+    }
                     </div>
                 </div>
           <FooterApp/>

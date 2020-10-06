@@ -37,6 +37,11 @@ const NotificationReducer = (state = initState, action) => {
         type: "info",
         message: action.message
       };
+      case "RESET_ERROR":
+        return{
+          ...state,
+          type:""
+        }
     default:
       return state;
   }

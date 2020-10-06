@@ -46,9 +46,9 @@ class SideBarApp extends Component {
       </div>
      
       <ul className="sidenav-nav pl-0">
-        <li><Link to="/my_properties"><i className="lni lni-alarm lni-tada-effect"></i>My Properties</Link></li>
-          <li ><Link to="/my_wishlist"><i className="lni lni-heart"></i>My Wishlist</Link></li>
-        <li><Link to="/settings"><i className="lni lni-cog"></i>Settings</Link></li>
+        <li><Link to="/my_properties" onClick={()=>{this.props.openUp()}}><i className="lni lni-alarm lni-tada-effect" ></i>My Properties</Link></li>
+          <li ><Link to="/my_wishlist" onClick={()=>{this.props.openUp()}}><i className="lni lni-heart" ></i>My Wishlist</Link></li>
+        <li><Link to="/settings"onClick={()=>{this.props.openUp()}}><i className="lni lni-cog" ></i>Settings</Link></li>
           <li><a onClick={()=>{logout(this.props)}} href="/login" ><i className="lni lni-power-switch"></i>Logout</a></li>
       </ul>
      

@@ -17,6 +17,7 @@ import {LoggedInRoute} from "./components/alreadyLoggedInRoute";
 import MyProperties from "./pages/myProperties";
 import MyWishlist from "./pages/wishlist";
 import DetailProperty from "./components/PropertyContactDetails";
+import Privacy from "./pages/privacy";
 // import PayService from "./pages/payments/payservice";
 
 //tapiwa tererai's Central Route Config
@@ -29,6 +30,7 @@ export default function RouteConfigExample() {
         <Route exact path="/"  name="Home" component={Home}/>
         <Route exact path="/home" name="Home" component={Home}/>
         <Route exact path="/login" name="Login"component={Login}/>
+        <Route exact path="/privacy" name="privacy" component={Privacy}/>
         {/*<PrivateRoute exact path="/make_payment" name="Make Payment" component={PayService}/>*/}
         <PrivateRoute exact path="/my_properties" name="My properties" component={MyProperties}/>
         <PrivateRoute exact path="/my_wishlist"name="My WishList" component={MyWishlist}/>

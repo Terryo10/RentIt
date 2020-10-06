@@ -55,7 +55,7 @@ class Houses extends Component {
                     </p>
 
                     <Link to={{pathname:'/single_property/',SingleProperty:property}} className="btn btn-success btn-sm add2cart-notify">
-                      <i className="mr-1 lni lni-travel"></i>Edit Property
+                      <i className="mr-1 lni lni-travel"></i>View Property
                     </Link>
                   </div>
                 </div>

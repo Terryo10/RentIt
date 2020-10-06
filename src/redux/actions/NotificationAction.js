@@ -1,6 +1,7 @@
-const NotificationDetails=(props)=>{
-let type = props.type;
-let message = props.message;
+export const NotificationDetails=(params)=>{
+    console.log(params)
+let type = params.type;
+let message = params.message;
     return(dispatch)=>{
         if (type === 'success') { 
             dispatch({type:'SUCCESS',message})
@@ -12,6 +13,9 @@ let message = props.message;
         }
         else if(type === 'info'){
             dispatch({type:'INFO',message})
+        }else if(type === 'reset'){
+            dispatch({type:'RESET_ERROR'})
         }
     }
 }
+

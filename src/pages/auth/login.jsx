@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {login} from "../../redux/actions/AuthAction";
 import Notify from "../../redux/services/notificate";
 import { ToastContainer} from 'react-toastify';
+import {NotificationDetails} from "../../redux/actions/NotificationAction";
 
 class Login extends Component {
   constructor(props) {
@@ -48,6 +49,14 @@ class Login extends Component {
     if(this.props.type === 'error'){
       let notif= new Notify()
       notif.error(this.props.message)
+      let params ={
+        type:"reset",
+        message:"",
+      }
+      setTimeout(()=>{
+        this.props.NotificationDetails(params)
+      },3000)
+     
     }
     if(this.props.type === 'success'){
       let notif= new Notify()
@@ -164,7 +173,8 @@ const mapStateToProps =(state)=>{
 
 const mapDispatchToProps =(dispatch)=>{
   return{
-    login:(creds,history)=>dispatch(login(creds,history))
+    login:(creds,history)=>dispatch(login(creds,history)),
+    NotificationDetails:(params)=>dispatch(NotificationDetails(params))
   }
 
 }

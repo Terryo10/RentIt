@@ -4,14 +4,17 @@ import Globalheader from '../components/headerglobal'
 import Api from "../apiUtils/api";
 import {Link} from "react-router-dom";
 import SideBarApp from "../components/side";
+import Loading from "../components/loading";
 
 class Category extends Component {
     constructor(props) {
         super(props);
         this.getCategories();
+
         
         this.state={
-            categories:[]
+            categories:[],
+            loading:true
         }
     }
 
@@ -19,7 +22,8 @@ class Category extends Component {
         let api = new Api();
         let data = await api.getData('/categories').then(({data})=>data)
         this.setState({
-            categories:data.category
+            categories:data.category,
+            loading:false
         })
     return data
 
@@ -30,8 +34,9 @@ class Category extends Component {
             <div>
                 <Globalheader props={this.props}/>
                 <SideBarApp props={this.props}/>
-                <br></br>
-                <div className="page-content-wrapper">
+                <br></br>{
+                    this.state.loading? <Loading/>:
+                    <div className="page-content-wrapper">
                     <div className="container">
                         <ul className="page-nav pl-0">
                             {this.state.categories.map((categories)=>(
@@ -41,6 +46,7 @@ class Category extends Component {
                         </ul>
                     </div>
                 </div>
+                }
                 <FooterApp/>
             </div>
         );
