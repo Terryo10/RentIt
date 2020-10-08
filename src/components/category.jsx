@@ -79,7 +79,7 @@ class CategorySingle extends Component{
                        
                     </div>
                 </div>
-               <FooterApp/>
+               <FooterApp props={this.props}/>
             </div>
         )
     }

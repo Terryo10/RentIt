@@ -1,3 +1,3 @@
-export const basePic = "http://127.0.0.1:8000/storage/property_images/"
+export const basePic = "http://192.168.8.101:5000/storage/property_images/"
 
 

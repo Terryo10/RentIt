@@ -18,7 +18,7 @@ function home(props) {
             
         </div>
       </div>
-      <FooterApp></FooterApp>
+      <FooterApp props={props}/>
     </div>
   );
 }

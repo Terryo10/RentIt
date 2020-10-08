@@ -134,7 +134,7 @@ class MyWishlist extends Component {
           </div>
         )}
 
-        <FooterApp />
+<FooterApp props={this.props}/>
       </div>
     );
   }

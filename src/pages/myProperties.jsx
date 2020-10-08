@@ -20,6 +20,7 @@ class MyProperties extends Component{
     userProfile=async()=>{
         let api = new Api();
         console.log('loading started')
+        console.log(this.props)
         let data = await api.getData("/my_properties").then(({ data }) => data);
         this.setState({
            properties: data.property ,
@@ -61,9 +62,12 @@ class MyProperties extends Component{
                                         <Link to={{pathname:'/single_property/',SingleProperty:property}} className="btn btn-success btn-sm add2cart-notify">
                                           <i className="mr-1 lni lni-travel"></i>Edit Property
                                         </Link>
+                                        <Link to={{pathname:'/add_images_to_property/'+property.id,SingleProperty:property}} className="btn btn-success btn-sm add2cart-notify">
+                                          <i className="mr-1 lni lni-travel"></i>Add More Images 
+                                        </Link>
                                         <br></br>
                                         {property.taken? <h1>kkkk</h1>:
-                                        <Link to={{pathname:'/single_property/',SingleProperty:property}} className="btn btn-success btn-sm add2cart-notify">
+                                        <Link to={{pathname:'/single_property/',SingleProperty:property}} className="btn btn-danger btn-sm add2cart-notify">
                                         <i className="mr-1 lni lni-travel"></i>Set as Taken
                                       </Link>
                                         }
@@ -79,7 +83,7 @@ class MyProperties extends Component{
     }
                     </div>
                 </div>
-          <FooterApp/>
+          <FooterApp props={this.props}/>
             </div>
         )
     }

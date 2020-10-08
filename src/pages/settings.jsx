@@ -53,7 +53,7 @@ class Settings extends Component {
                     </div>
                 </div>
                 </div>
-                <FooterApp/>
+                <FooterApp props={this.props}/>
             </div>
          );
     }

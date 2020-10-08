@@ -377,7 +377,7 @@ class PostProperty extends Component {
         </div>
          
        
-        <FooterApp></FooterApp>
+        <FooterApp props={this.props}/>
       </div>
     );
   }

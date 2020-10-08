@@ -5,6 +5,7 @@ import SideBarApp from "./side";
 import { Link, Redirect } from "react-router-dom";
 import { basePic } from "../apiUtils/picture";
 // import DetailsProperty from "./PropertyContactDetails";
+import PropertyImages from "./propertyImages";
 import Api from "../apiUtils/api";
 
 class SingleProperty extends Component {
@@ -59,13 +60,15 @@ class SingleProperty extends Component {
         <SideBarApp props={this.props} />
         <div className="page-content-wrapper">
           <div className="product-slides ">
+          
             <div
               className="single-product-slide"
               style={{
                 backgroundImage: "url(" + SinglePro + ")",
-                height: "300px",
+                height: "300px"
               }}
             ></div>
+           
           </div>
 
           <div className="product-description pb-3">
@@ -101,6 +104,10 @@ class SingleProperty extends Component {
                 </div>
               </div>
             </div>
+            <div>
+              <PropertyImages props={this.props}/>
+            </div>
+            
             <div className="p-specification bg-white mb-3 py-3">
               <div className="container">
                 <h6>Specifications</h6>
@@ -165,7 +172,7 @@ class SingleProperty extends Component {
             </div>
           </div>
         </div>
-        <FooterApp />
+        <FooterApp props={this.props} />
       </div>
     );
   }

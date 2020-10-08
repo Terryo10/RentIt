@@ -12,7 +12,7 @@ class UpdateSubscription extends Component{
                 <div className="page-content-wrapper">
                     <h1>Your subscription expired please update</h1>
                 </div>
-                <FooterApp/>
+                <FooterApp props={this.props}/>
             </div>
         )
     }

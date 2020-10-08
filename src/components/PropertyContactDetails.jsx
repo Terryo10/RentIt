@@ -35,7 +35,7 @@ class DetailsProperty extends Component {
                 <HeaderGlobal props={this.props} />
                 <SideBarApp props={this.props} />
                         <Loading/>
-                        <FooterApp/>
+                        <FooterApp props={this.props}/>
                         </div>
            );
     }
@@ -95,7 +95,7 @@ class DetailsProperty extends Component {
                 </div>
 
         </div>
-        <FooterApp />
+        <FooterApp props={this.props} />
       </div>
     );
   }
