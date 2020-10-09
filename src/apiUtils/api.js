@@ -1,11 +1,11 @@
   import axios from "axios";
 const api = axios.create({
-  baseURL: "http://192.168.8.101:5000/api/",
+  baseURL: "http://192.168.8.102:5000/api/",
   method: "POST"
 });
 
 class Api {
-  baseURL = "http://192.168.8.101:5000/api/";
+  baseURL = "http://192.168.8.102:5000/api/";
   postLoginData = async (addedurl, item) => {
     // console.log(token)
     let data = await api.post(addedurl,item).then((response) => response);

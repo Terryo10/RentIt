@@ -50,7 +50,9 @@ class PropertyAdded extends Component {
       property:data.data.property,
       loading:false,
       file: [null],
+      imgCollection: ''
       })
+      this.uploadMultipleFiles = this.uploadMultipleFiles.bind(this);
       console.log(this.state)
     }
   }).catch(function (error) {
@@ -63,6 +65,7 @@ class PropertyAdded extends Component {
 
 
   uploadMultipleFiles(e) {
+    this.setState({ imgCollection: e.target.files })
     this.fileObj.push(e.target.files)
     // let file = e.target.files;
     for (let i = 0; i < this.fileObj[0].length; i++) {
@@ -70,7 +73,6 @@ class PropertyAdded extends Component {
     }
     this.setState({ 
       file: this.fileArray,
-      mafaira:e.target.files
     })
 }
 
@@ -78,9 +80,11 @@ uploadFiles=async(e) =>{
   //server actions here
   e.preventDefault()
   let api= new Api();
-  console.log(this.state)
+  console.log(this.state.imgCollection)
   const fd = new FormData();
-  fd.append('images',this.state.mafaira);
+  for (const key of Object.keys(this.state.imgCollection)) {
+    fd.append('imgCollection[]', this.state.imgCollection[key])
+  }
   fd.append('property_id',this.state.property.id);
   return await api.postData('property_images',fd).then((data)=>{
     if(data.status ===200){
