@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import {connect} from 'react-redux';
 import {signUp} from "../../redux/actions/AuthAction";
 import {Link} from "react-router-dom";
+import Notify from "../../redux/services/notificate";
+import { ToastContainer} from 'react-toastify';
+import {NotificationDetails} from "../../redux/actions/NotificationAction";
+
 
 class Login extends Component {
   constructor(props) {
@@ -19,14 +23,18 @@ class Login extends Component {
 
   register = (e) => {
     e.preventDefault()
-    console.log(this.state)
+    console.log(this.props)
+    this.setState({
+      isLoding:true
+    })
     let regState={
       email:this.state.email,
       password:this.state.password,
       name:this.state.username
     }
-    this.props.signUp(regState);
+    this.props.signUp(regState,this.props.history);
   }
+  
 
   handleInputChange = (event) => {
     const target = event.target;
@@ -38,6 +46,36 @@ class Login extends Component {
     });
   };
   render() {
+    if(this.props.type === 'error'){
+      let notif= new Notify()
+      notif.error(this.props.message)
+      let params ={
+        type:"reset",
+        message:"",
+      }
+      setTimeout(()=>{
+        this.props.NotificationDetails(params)
+        this.setState({
+          isLoding:false
+        })
+      },1000)
+     
+     
+    }
+    if(this.props.type === 'success'){
+      this.setState({
+        isLoding:false
+      })
+      let notif= new Notify()
+      notif.success(this.props.message)
+      let params ={
+        type:"reset",
+        message:"",
+      }
+      setTimeout(()=>{
+        this.props.NotificationDetails(params)
+      },2000)
+    }
     let loading = (
       <div className=" d-flex justify-content-center">
         <div className="spinner-border text-dark " role="status">
@@ -57,6 +95,7 @@ class Login extends Component {
     }
     return (
       <div>
+         <ToastContainer />
         <div className="login-wrapper d-flex align-items-center justify-content-center text-center">
           <div className="background-shape"></div>
           <div className="container">
@@ -147,13 +186,15 @@ class Login extends Component {
 }
 const mapStateToProps =(state)=>{
   return{
-    authResponse:state.auth.authResponse
+    authResponse:state.auth.authResponse,
+    type:state.notification.type
   }
 }
 
 const mapDispatchToProps =(dispatch)=>{
   return{
-    signUp:(creds)=>dispatch(signUp(creds))
+    signUp:(creds)=>dispatch(signUp(creds)),
+    NotificationDetails:(params)=>dispatch(NotificationDetails(params))
   }
 
 }

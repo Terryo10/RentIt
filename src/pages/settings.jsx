@@ -45,8 +45,8 @@ class Settings extends Component {
                             <div className="card-body">
                                
                                 <div className="single-settings d-flex align-items-center justify-content-between">
-                                    <div className="title"><i className="lni lni-lock"></i><span>Password<span>Updated 2 month ago</span></span></div>
-                                    <div className="data-content"><a href="change-password.html">Change<i className="lni lni-chevron-right"></i></a></div>
+                                    <div className="title"><i className="lni lni-lock"></i><span>Password</span></div>
+                                    <div className="data-content"><Link to="/change_password">Change<i className="lni lni-chevron-right"></i></Link></div>
                                 </div>
                             </div>
                         </div>

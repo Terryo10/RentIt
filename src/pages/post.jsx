@@ -3,6 +3,11 @@ import FooterApp from "../components/footer";
 import HeaderGlobal from "../components/headerglobal";
 import Api from "../apiUtils/api";
 import SideBarApp from "../components/side";
+import Loading from "../components/loading";
+import {connect} from "react-redux";
+import Notify from "../redux/services/notificate";
+import { ToastContainer} from 'react-toastify';
+import {NotificationDetails} from "../redux/actions/NotificationAction";
 
 class PostProperty extends Component {
   constructor(props) {
@@ -21,12 +26,14 @@ class PostProperty extends Component {
       garage_number: "",
       description: "",
       price: "",
-      day_or_month: "",
+      day_or_month: "Per Day",
       contact_info: "",
       categories_id: "",
-      categories: [],
+      categories:"",
       selectedFile: "",
       yard_size:"",
+      isLoading:true,
+      isLoadingButton:false
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onFileChange = this.onFileChange.bind(this);
@@ -35,8 +42,15 @@ class PostProperty extends Component {
 
   getPropertyType = async () => {
     let api = new Api();
-    let data = await api.getData("/categories").then(({ data }) => data);
-    this.setState({ categories: data.category });
+    return await api.getData("/categories").then((data)=>{
+      if(data.status===200){
+        this.setState({ 
+          categories: data.data.category,
+          isLoading:false
+         });
+      }
+    });
+   
 
   };
 
@@ -67,6 +81,9 @@ class PostProperty extends Component {
 
   Post = async (event) => {
     event.preventDefault();
+    this.setState({
+      isLoadingButton:true
+    })
     const fd = new FormData();
     fd.append('image',this.state.selectedFile,this.state.selectedFile.name);
     fd.append('city',this.state.city);
@@ -89,7 +106,18 @@ class PostProperty extends Component {
     const api = new Api();
     return api.postData('properties',fd).then(data=>{
       if(data.status ===200){
-          this.props.history.push({pathname:'/property_added',state:data.data})
+        let params ={
+          type:"success",
+          message:"Uploaded Successfully please wait...",
+        }
+        this.props.NotificationDetails(params)
+        console.log(this.props)
+        this.setState({
+          isLoadingButton:false
+        })
+        setTimeout(()=>{
+          this.props.history.push({pathname:'/my_properties'})
+        },5000)
       }else if(data.status ===218){
             console.log('subscribe to post')
       }else if (data.status ===217){
@@ -108,12 +136,60 @@ class PostProperty extends Component {
 
   };
 
+
   render() {
+  
+    if(this.props.type === 'error'){
+      let notif= new Notify()
+      notif.error(this.props.message)
+      let params ={
+        type:"reset",
+        message:"",
+      }
+      setTimeout(()=>{
+        this.props.NotificationDetails(params)
+        
+      },1000)
+     
+     
+    }
+    if(this.props.type === 'success'){
+      let notif= new Notify()
+      notif.success(this.props.message)
+      let params ={
+        type:"reset",
+        message:"",
+      }
+      setTimeout(()=>{
+        this.props.NotificationDetails(params)
+      },2000)
+    }
+  
+    let loading = (
+      <div className=" d-flex justify-content-center">
+        <div className="spinner-border text-dark " role="status">
+          <span className="sr-only">Loading...</span>;
+        </div>
+      </div>
+    );
+    let action;
+    if (this.state.isLoadingButton === true) {
+      action = loading;
+    } else {
+      action = (
+        <button className="btn btn-success w-100" type="submit">
+         Save Property
+         </button>
+      );
+    }
+  
     return (
       <div>
         <HeaderGlobal props={this.props}></HeaderGlobal>
         <SideBarApp props={this.props}/>
-        <div className="page-content-wrapper">
+        <ToastContainer />
+        {this.state.isLoading?<Loading/>:
+                <div className="page-content-wrapper">
           <div className="container">
             <div className="profile-wrapper-area py-3">
               <div className="card user-info-card">
@@ -121,15 +197,7 @@ class PostProperty extends Component {
                   <div className="user-profile mr-3">
                     <img src="assets/img/core-img/rentit.png" alt=""></img>
                     <div className="change-user-thumb">
-                      <form>
-                        <input
-                          className="form-control-file"
-                          type="file"
-                        ></input>
-                        <button>
-                          <i className="lni lni-pencil"></i>
-                        </button>
-                      </form>
+                      
                     </div>
                   </div>
                   <div className="user-info">
@@ -154,6 +222,7 @@ class PostProperty extends Component {
                           name="categories_id"
                           value={this.state.categories_id}
                           onChange={this.handleInputChange}
+                          required
                         >
                           {this.state.categories.map((categories) => (
                             <option value={categories.id} key={categories.id}>
@@ -175,6 +244,7 @@ class PostProperty extends Component {
                           placeholder="e.g House in chitungwiza"
                           value={this.state.title}
                           onChange={this.handleInputChange}
+                          required
                       ></input>
                     </div>
                     <div className="mb-3">
@@ -188,6 +258,7 @@ class PostProperty extends Component {
                         name="street"
                         value={this.state.street}
                         onChange={this.handleInputChange}
+                        required
                       ></input>
                     </div>
                     <div className="mb-3">
@@ -201,6 +272,7 @@ class PostProperty extends Component {
                         name="city"
                         value={this.state.city}
                         onChange={this.handleInputChange}
+                        required
                       ></input>
                     </div>
                     <div className="mb-3">
@@ -214,6 +286,7 @@ class PostProperty extends Component {
                         name="province"
                         value={this.state.province}
                         onChange={this.handleInputChange}
+                        required
                       ></input>
                     </div>
                     <div className="mb-3">
@@ -227,6 +300,7 @@ class PostProperty extends Component {
                         name="country"
                         value={this.state.country}
                         onChange={this.handleInputChange}
+                        required
                       ></input>
                     </div>
                     <div className="mb-3">
@@ -240,6 +314,7 @@ class PostProperty extends Component {
                         name="contact_info"
                         value={this.state.contact_info}
                         onChange={this.handleInputChange}
+                        required
                       ></input>
                     </div>
                     <div className="mb-3">
@@ -254,6 +329,7 @@ class PostProperty extends Component {
                           name="day_or_month"
                           value={this.state.day_or_month}
                           onChange={this.handleInputChange}
+                          required
                         >
                           <option value="Per day">Per day</option>
                           <option value="Per week">Per week </option>
@@ -277,6 +353,7 @@ class PostProperty extends Component {
                         name="price"
                         value={this.state.price}
                         onChange={this.handleInputChange}
+                        required
                       ></input>
                     </div>
                     <div className="mb-3">
@@ -356,6 +433,7 @@ class PostProperty extends Component {
                         name="description"
                         value={this.state.description}
                         onChange={this.handleInputChange}
+                        required
                       ></textarea>
                     </div>
 
@@ -364,11 +442,9 @@ class PostProperty extends Component {
                         <i className="lni lni-image"></i>
                         <span> Main Image</span>
                       </div>
-                      <input type="file" onChange={this.onFileChange}></input>
+                      <input type="file" onChange={this.onFileChange} required></input>
                     </div>
-                    <button className="btn btn-success w-100" type="submit">
-                      Save Property
-                    </button>
+                    <div>{action}</div>
                   </form>
                 </div>
               </div>
@@ -376,11 +452,29 @@ class PostProperty extends Component {
           </div>
         </div>
          
-       
+      
+        }
+ 
         <FooterApp props={this.props}/>
       </div>
     );
   }
 }
 
-export default PostProperty;
+
+
+const mapStateToProps =(state)=>{
+  return{
+    message:state.notification.message,
+    type:state.notification.type
+  }
+}
+
+const mapDispatchToProps =(dispatch)=>{
+  return{
+    NotificationDetails:(params)=>dispatch(NotificationDetails(params))
+  }
+
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(PostProperty);

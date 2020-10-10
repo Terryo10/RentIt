@@ -1,3 +1,5 @@
+// import { act } from "react-dom/test-utils";
+
 const initState = {
   type: "",
   message: "",
@@ -12,11 +14,11 @@ const NotificationReducer = (state = initState, action) => {
         message: action.message
       };
     case "ERROR":
-      console.log(action.res.data.message)
+      // console.log(action.res.data.message)
       return {
         ...state,
         type: "error",
-        message: action.res.data.message
+        message: action.message || action.res.data.message
       };
       case "ERROR_CUSTOM":
       console.log(action.message)

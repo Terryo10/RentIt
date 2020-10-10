@@ -33,16 +33,19 @@ class Login extends Component {
   };
 
   login =(e)=>{
+    
+    this.setState({
+      isLoding:true
+    })
    let loginState ={
       email:this.state.email,
      password: this.state.password
     }
     e.preventDefault()
    this.props.login(loginState,this.props.history)
+
   }
 
-
-  
 
   
   render() {  
@@ -55,12 +58,27 @@ class Login extends Component {
       }
       setTimeout(()=>{
         this.props.NotificationDetails(params)
-      },3000)
+        this.setState({
+          isLoding:false
+        })
+      },2000)
+     
      
     }
     if(this.props.type === 'success'){
+      this.setState({
+        isLoding:false
+      })
       let notif= new Notify()
       notif.success(this.props.message)
+      let params ={
+        type:"reset",
+        message:"",
+      }
+      setTimeout(()=>{
+        this.props.NotificationDetails(params)
+        this.props.history.push('/')
+      },2000)
     }
     
 
