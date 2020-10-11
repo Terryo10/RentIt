@@ -159,7 +159,7 @@ class Login extends Component {
                         type="password"
                         placeholder="********************"
                         required
-                        min="6"
+                        minLength="6"
                         name="password"
                         value={this.state.password}
                         onChange={this.handleInputChange}

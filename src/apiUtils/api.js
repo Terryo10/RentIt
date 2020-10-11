@@ -1,11 +1,10 @@
   import axios from "axios";
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8000/api/",
-  method: "POST"
+  baseURL: "http://192.168.8.102:5000/api/",
 });
 
 class Api {
-  baseURL = "http://127.0.0.1:8000/api/";
+  baseURL = "http://192.168.8.102:5000/api/";
   postLoginData = async (addedurl, item) => {
     // console.log(token)
     let data = await api.post(addedurl,item).then((response) => response);
@@ -35,6 +34,14 @@ class Api {
       // body:JSON.stringify(item)
     }
     let data = await api.get(addedurl,requestOptions, item).then((response) => response);
+
+      return data;
+  }
+
+  getUnauthenticatedData = async (addedurl, item) => {
+    // console.log(token)
+    
+    let data = await api.get(addedurl, item).then((response) => response);
 
       return data;
   }

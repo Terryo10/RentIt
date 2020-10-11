@@ -144,7 +144,7 @@ class Login extends Component {
                         id="password"
                         type="password"
                         required
-                        min="6"
+                        minLength="6"
                         placeholder="*******"
                         name="password"
                         value={this.state.password}
