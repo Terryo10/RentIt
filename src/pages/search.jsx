@@ -62,7 +62,7 @@ class SearchProperties extends Component {
               <div className="card blog-catagory-card">
                  <div className="card-body"><p text="center" ><i className="lni lni-quotation"></i><span className="d-block">No Search Results Found For {this.state.query}</span></p></div>
               </div>
-            </div> :<div>
+            </div> : <div> 
             <div className="col-md12 ">
                      <br></br>
               <div className="card blog-catagory-card">
@@ -70,6 +70,7 @@ class SearchProperties extends Component {
               </div>
             </div>
             <br></br>
+            <div className="row g-3">
           {this.state.properties.map((property) => (
             <div key={property.id} className="col-12 col-md-6">
               <div className="card weekly-product-card">
@@ -99,6 +100,7 @@ class SearchProperties extends Component {
               </div>
             </div>
           ))}
+          </div>
 
           </div> }
           </div>
