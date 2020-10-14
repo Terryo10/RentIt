@@ -76,8 +76,8 @@ class SingleProperty extends Component {
                 message:data.data.message,
               }
               this.props.NotificationDetails(params)
-        }
-            console.log('you have already added this item to your wish list')
+        }else{
+          console.log('you have already added this item to your wish list')
             this.setState({
                 addingtowishlist: false,
               });
@@ -86,6 +86,8 @@ class SingleProperty extends Component {
                 message:data.data.message,
               }
               this.props.NotificationDetails(params)
+        }
+            
         
     },error=>{
         console.log('you are not logged in')
@@ -270,12 +272,6 @@ class SingleProperty extends Component {
                     </li>
                   ) : null}
                 </ul>
-                <p className="mb-0">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Quasi, eum? Id, culpa? At officia quisquam laudantium nisi
-                  mollitia nesciunt, qui porro asperiores cum voluptates placeat
-                  similique recusandae in facere quos vitae?
-                </p>
               </div>
             </div>
           </div>
