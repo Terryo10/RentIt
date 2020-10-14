@@ -3,12 +3,14 @@ import FooterApp from "../footer";
 import SideBar from "../side";
 import HeaderApp from "../headerglobal";
 import {Link} from "react-router-dom";
+import Api from "../../apiUtils/api";
+import Loading from "../loading";
 
 class EditPropertyOptions extends Component {
   constructor(props){
     super(props)
     this.state={
-      loading:true,
+      loading:false,
     }
     console.log(props)
   }
@@ -18,9 +20,21 @@ checkPropertyOwner=async()=>{
 
 }
 
-deleteProperty(id){
+deleteProperty=async(id)=>{
+  this.setState({
+    loading:true
+  })
+  let api= new Api();
+  return await api.deleteData('properties/'+id).then((data)=>{
+   if(data.data.success === true){
+    this.props.history.push('/my_properties');
+   }else{
+    this.props.history.push('/my_properties');
+   }
+    
+  })
 
-console.log(id)
+
 }
 
   render() {
@@ -28,7 +42,7 @@ console.log(id)
         <div>
           <HeaderApp props={this.props}/>
           <SideBar props={this.props}/>
-
+          {this.state.loading?<Loading/>:
           <div className="page-content-wrapper">
           <div className="container">
             <div className="settings-wrapper py-3">
@@ -114,6 +128,7 @@ console.log(id)
               </div>
               </div>
               </div>
+              }
 
 
           <FooterApp props={this.props}/>

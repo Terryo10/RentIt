@@ -11,7 +11,6 @@ const PaymentReducer =(state= initState,action)=>{
             return {
                 ...state,
                 subscriptionmade: !state.subscriptionmade
-
             }
         case 'PAYMENT_LOADING':
             console.log(action);

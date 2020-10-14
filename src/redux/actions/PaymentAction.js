@@ -8,10 +8,10 @@ export const PaymentAction=(paymentdetails)=>{
       paymentService(paymentdetails).then((res)=>{
         console.log('pano')
           if(res.data.success === true) {
-              console.log('pano')
               dispatch({type:'STOP_PAYMENT_LOADING'})
               dispatch({type:'SUCCESSFUL_SUBSCRIPTION',res})
               dispatch({type:'SUBSCRIBED'})
+              window.location.reload();
           }else if(res.data.success === false){
               console.log('Please Subscribe to view details')
               dispatch({type:'SUCCESSFUL_SUBSCRIPTION',res})
@@ -30,12 +30,13 @@ export const PaymentAction=(paymentdetails)=>{
 export const CheckPayment=()=>{
     return (dispatch)=>{
         checkPayment().then((res)=>{
-            if(res.status === 200) {
+            if(res.data.success === true) {
                 console.log('activated subscription')
                 dispatch({type:'ACTIVATED_SUBSCRIPTION'})
-            }else if(res.status === 222){
+                window.location.reload();
+            }else if(res.data.cancelled === true){
                 dispatch({type:'CANCELLED_TRANSACTION'})
-            }else if(res.status === 223){
+            }else if(res.data.sent === true){
                 dispatch({type:'TRANSACTION_SENT'})
             }
         })

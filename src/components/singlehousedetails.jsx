@@ -187,7 +187,7 @@ class SingleProperty extends Component {
                   <p className="sale-price mb-0">${kwatabva.price}</p>
                   <p>{kwatabva.day_or_month}</p>
                   <Link
-                    to={{ pathname: "/property_details/",property: kwatabva }}
+                    to={{ pathname: "/property_details/"+kwatabva.id,property: kwatabva }}
                   >
                     <button className="btn btn-success ml-3">
                       <i className="lni lni-phone"></i> View Location & Contact

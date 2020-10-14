@@ -23,6 +23,8 @@ import SearchProperties from "./pages/search";
 import EditPropertyOptions from "./components/Edit/editPropertyOptions"
 import EditProperties from "./components/Edit/editProperty";
 import ImageEditor from "./components/Edit/imageEditor";
+import ImageViewer from "./components/imageViewer";
+import Pay from "./pages/payments/pay";
 
 // import PayService from "./pages/payments/payservice";
 
@@ -39,6 +41,8 @@ export default function RouteConfigExample() {
         <LoggedInRoute exact path="/fogotpassword" name="Login"component={ForgotPassword}/>
         <Route exact path="/search" name="search" component={SearchProperties}/>
         <Route exact path="/privacy" name="privacy" component={Privacy}/>
+        <Route exact path="/image_view/:imagePath" name="Home" component={ImageViewer}/>
+        <PrivateRoute exact path="/pay" name="Change Password" component={Pay}/>
         <PrivateRoute exact path="/edit_property_options/:property_id" name="Change Password" component={EditPropertyOptions}/>
         <PrivateRoute exact path="/edit_property_details/:property_id" name="Change Password" component={EditProperties}/>
         <PrivateRoute exact path="/edit_property_images/:property_id" name="Change Password" component={ImageEditor}/>
@@ -48,7 +52,7 @@ export default function RouteConfigExample() {
         <PrivateRoute exact path="/post_property"name="PostProperty" component={PostProperty}/>
         <PrivateRoute exact path="/add_images_to_property/:property_id"name="PropertyAdded" component={PropertyAdded}/>
         <Route exact path="/single_property/:property_id" name="SingleProperty" component={SingleProperty}/>
-        <PrivateRoute exact path="/property_details" name="My properties" component={DetailProperty}/>
+        <PrivateRoute exact path="/property_details/:property_id" name="My properties" component={DetailProperty}/>
         <PrivateRoute exact path="/settings" name="Settings" component={SettingsPage}/>
         <Route exact path="/categories" name="Categories" component={Category}/>
         <Route path="/single_category/:category_id" name="Single Category" component={CategorySingle}/>

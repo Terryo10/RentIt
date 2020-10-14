@@ -72,12 +72,27 @@ class Settings extends Component {
                   <div className="single-settings d-flex align-items-center justify-content-between">
                     <div className="title">
                       <i className="lni lni-protection"></i>
+                      <span>Subscriptions</span>
+                    </div>
+                    <div className="data-content">
+                      <Link className="pl-4" to="/pay">
+                        <i className="lni lni-chevron-right"></i>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="card settings-card">
+                <div className="card-body">
+                  <div className="single-settings d-flex align-items-center justify-content-between">
+                    <div className="title">
+                      <i className="lni lni-protection"></i>
                       <span>Privacy</span>
                     </div>
                     <div className="data-content">
-                      <a className="pl-4" href="privacy-policy.html">
+                      <Link className="pl-4" to="/privacy">
                         <i className="lni lni-chevron-right"></i>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>

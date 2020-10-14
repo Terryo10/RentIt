@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import FooterApp from "./footer";
 import SideBarApp from "./side";
 import HeaderGlobal from "./headerglobal";
-import {Link, Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {propertyDetails} from "../redux/actions/SubscriptionAction";
 import {connect} from "react-redux";
 import PayService from "../pages/payments/payservice";
@@ -15,24 +15,24 @@ class DetailsProperty extends Component {
 
   constructor(props){
     super(props)
+    this.state={
+        id:this.props.match.params.property_id
+    }
     this.getDetails()
 
   }
 
 
   getDetails=async()=>{
-      if(this.props.location.property == null){
-          return <Redirect to={{pathname: '/home'}}/>
-      }
-      this.props.propertyDetails(this.props)
+      let id = this.state.id
+      
+      this.props.propertyDetails(id)
     // this.setState({ details: data.properties });
   }
   render() {
 
     
-    if(this.props.location.property == null){
-        return <Redirect to={{pathname: '/home'}}/>
-    }else if(this.props.loading === true){
+    if(this.props.loading === true){
             return ( <div>
                 <HeaderGlobal props={this.props} />
                 <SideBarApp props={this.props} />
@@ -64,23 +64,12 @@ class DetailsProperty extends Component {
 
                                 <div className="single-settings d-flex align-items-center justify-content-between">
                                     <div className="title"><i className="lni lni-question-circle"></i><span>{this.props.details.street} <br></br>
-                                   city: {this.props.location.property.city}
-                                        <br></br>
-                                   country: {this.props.location.property.country}
                                     </span></div>
                                     <div className="data-content"><Link className="pl-4" to="/my_properties"><i className="lni lni-travel"></i></Link></div>
                                 </div>
                             </div>
                         </div>
-                        <div className="card settings-card">
-                            <div className="card-body">
-
-                                <div className="single-settings d-flex align-items-center justify-content-between">
-                                    <div className="title"><i className="lni lni-question-circle"></i><span>${this.props.location.property.price} Charged {this.props.location.property.day_or_month}</span></div>
-
-                                </div>
-                            </div>
-                        </div>
+        
                         <div className="card settings-card">
                             <div className="card-body">
 

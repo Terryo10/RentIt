@@ -6,6 +6,7 @@ import Api from "../../apiUtils/api";
 import Loading from "../loading";
 import {connect} from 'react-redux';
 import {CheckPayment} from "../../redux/actions/PaymentAction";
+import {Link} from "react-router-dom";
 
 class activateSubscription extends Component{
     constructor(props) {
@@ -42,7 +43,6 @@ class activateSubscription extends Component{
     }
 
     componentDidUpdate(prevProps){
-        console.log(prevProps)
         if(prevProps.props.subscriptionmade===false){
             this.setState({
                 Pageloading:false
@@ -74,8 +74,8 @@ render() {
                                 <div className="single-profile-data d-flex align-items-center justify-content-between">
                                     <div className="title d-flex align-items-center"><i className="lni lni-star"></i><span>If you have not payed yet click here to pay & renew your subscription</span>
                                     </div>
-                                    <div className="data-content"><a className="btn btn-success btn-sm"
-                                                                     href="my-order.html">Pay</a></div>
+                                    <div className="data-content"><Link className="btn btn-success btn-sm"
+                                                                     to="/pay">Pay</Link></div>
                                 </div>
                             </div>
                         </div>

@@ -11,7 +11,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import 'filepond/dist/filepond.min.css'
+
+
 // import "./owl.css";
 
 const store = createStore(RootReducer, applyMiddleware(thunk));
