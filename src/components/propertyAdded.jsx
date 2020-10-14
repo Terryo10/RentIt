@@ -5,6 +5,10 @@ import SideBarApp from "./side";
 // import {Redirect} from "react-router-dom";
 import Api from "../apiUtils/api";
 import Loading from "./loading";
+import {connect} from "react-redux";
+import Notify from "../redux/services/notificate";
+import { ToastContainer} from 'react-toastify';
+import {NotificationDetails} from "../redux/actions/NotificationAction";
 
 class PropertyAdded extends Component {
 
@@ -15,7 +19,8 @@ class PropertyAdded extends Component {
     this.state = {
       file: [null],
       loading:true,
-      property:""
+      property:"",
+      isLoadingButton:false
   }
   this.uploadMultipleFiles = this.uploadMultipleFiles.bind(this)
   this.uploadFiles = this.uploadFiles.bind(this)
@@ -24,6 +29,7 @@ class PropertyAdded extends Component {
       property:"",
       loading:true,
       file: [null],
+    
     }
     this.fetchProperty();
   }else{
@@ -79,8 +85,10 @@ class PropertyAdded extends Component {
 uploadFiles=async(e) =>{
   //server actions here
   e.preventDefault()
+  this.setState({
+    isLoadingButton:true
+  })
   let api= new Api();
-  console.log(this.state.imgCollection)
   const fd = new FormData();
   for (const key of Object.keys(this.state.imgCollection)) {
     fd.append('imgCollection[]', this.state.imgCollection[key])
@@ -88,19 +96,90 @@ uploadFiles=async(e) =>{
   fd.append('property_id',this.state.property.id);
   return await api.postData('property_images',fd).then((data)=>{
     if(data.status ===200){
-      console.log(data)
+      if(data.data.success === true){
+        this.setState({
+          isLoadingButton:false
+        })
+        let params ={
+          type:"success",
+          message:data.data.message,
+        }
+        this.props.NotificationDetails(params)
+        setTimeout(()=>{
+          this.props.history.push('/my_properties')
+        },2000)
+      }else{
+        this.setState({
+          isLoadingButton:false
+        })
+        let params ={
+          type:"error",
+          message:data.data.message,
+        }
+        this.props.NotificationDetails(params)
+      
+      }
+      
+     
     }
 
   })
-
 }
   render() {
+
+    if(this.props.type === 'error'){
+      let notif= new Notify()
+      notif.error(this.props.message)
+      let params ={
+        type:"reset",
+        message:"",
+      }
+      
+      setTimeout(()=>{
+        this.props.NotificationDetails(params)
+        
+      },2000)
+     
+     
+    }
+    if(this.props.type === 'success'){
+      let notif= new Notify()
+      notif.success(this.props.message)
+      let params ={
+        type:"reset",
+        message:"",
+      }
+      setTimeout(()=>{
+        this.props.NotificationDetails(params)
+
+      },2000)
+    }
+
+
+    let loading = (
+      <div className=" d-flex justify-content-center">
+        <div className="spinner-border text-dark " role="status">
+          <span className="sr-only">Loading...</span>;
+        </div>
+      </div>
+    );
+    let action;
+    if (this.state.isLoadingButton === true) {
+      action = loading;
+    } else {
+      action = (
+        <button className="btn btn-warning btn-lg w-100" type="submit">
+        Post Images
+       </button>
+      );
+    }
 
     return (
      
       <div>
         <HeaderGlobal props={this.props}></HeaderGlobal>
               <SideBarApp props={this.props}/>
+              <ToastContainer />
               {this.state.loading?<Loading/>:
         <div className="page-content-wrapper">
           <div className="container">
@@ -123,9 +202,7 @@ uploadFiles=async(e) =>{
                   </input>
                 </div>
 
-                <button className="btn btn-warning btn-lg w-100" type="submit">
-                 Post Images
-                </button>
+                {action}
               </form>
             </div>
           </div>
@@ -137,4 +214,18 @@ uploadFiles=async(e) =>{
   }
 }
 
-export default PropertyAdded;
+const mapStateToProps =(state)=>{
+  return{
+    message:state.notification.message,
+    type:state.notification.type
+  }
+}
+
+const mapDispatchToProps =(dispatch)=>{
+  return{
+
+    NotificationDetails:(params)=>dispatch(NotificationDetails(params))
+  }
+
+}
+export default connect(mapStateToProps,mapDispatchToProps) (PropertyAdded);

@@ -118,7 +118,7 @@ class PayService extends Component{
                         </div>
                     </div>
                 </div>
-                <FooterApp/>
+                <FooterApp props={this.props.props}/>
             </div>
         )
     }

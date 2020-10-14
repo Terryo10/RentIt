@@ -83,7 +83,7 @@ render() {
 
             </div>
             </div>
-            <FooterApp props={this.props}/>
+            <FooterApp props={this.props.props}/>
         </div>
     )
 }

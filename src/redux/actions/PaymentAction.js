@@ -6,11 +6,13 @@ export const PaymentAction=(paymentdetails)=>{
     return (dispatch)=>{
         dispatch({type:'PAYMENT_LOADING'})
       paymentService(paymentdetails).then((res)=>{
-          if(res.status === 200) {
+        console.log('pano')
+          if(res.data.success === true) {
+              console.log('pano')
               dispatch({type:'STOP_PAYMENT_LOADING'})
               dispatch({type:'SUCCESSFUL_SUBSCRIPTION',res})
               dispatch({type:'SUBSCRIBED'})
-          }else if(res.status === 214){
+          }else if(res.data.success === false){
               console.log('Please Subscribe to view details')
               dispatch({type:'SUCCESSFUL_SUBSCRIPTION',res})
           }else if(res.status === 215){

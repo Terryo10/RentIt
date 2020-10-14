@@ -16,7 +16,7 @@ class PropertyImages extends Component {
   fetchImages = async () => {
     let api = new Api();
     return await api
-      .getData("property_images/" + this.props.props.location.SingleProperty.id)
+      .getData("property_images/" + this.props.props.match.params.property_id)
       .then((data) => {
         if (data.status === 200) {
           this.setState({

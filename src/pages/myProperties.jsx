@@ -46,31 +46,25 @@ class MyProperties extends Component{
                     
                                         <Link
                                           className="product-thumbnail d-block"
-                                          to={{pathname:'/single_property/',SingleProperty:property}}
+                                          to={{pathname:'/single_property/'+property.id,SingleProperty:property}}
                                         >
                                           <img src={basePic+property.imagePath} alt=""></img>
                                         </Link>
                                       </div>
                                       <div className="product-description">
-                                        <Link to={{pathname:'/single_property/',SingleProperty:property}} className="product-title d-block" href="/">
+                                        <Link to={{pathname:'/single_property/'+property.id,SingleProperty:property}} className="product-title d-block" href="/">
                                           {property.title}
                                         </Link>
                                         <p className="sale-price">
                                           <i className="lni lni-dollar"></i>{property.price}
                                         </p>
                     
-                                        <Link to={{pathname:'/single_property/',SingleProperty:property}} className="btn btn-success btn-sm add2cart-notify">
+                                        <Link to={{pathname:'/edit_property_options/'+property.id,SingleProperty:property}} className="btn btn-success btn-sm add2cart-notify">
                                           <i className="mr-1 lni lni-travel"></i>Edit Property
                                         </Link>
-                                        <Link to={{pathname:'/add_images_to_property/'+property.id,SingleProperty:property}} className="btn btn-success btn-sm add2cart-notify">
-                                          <i className="mr-1 lni lni-travel"></i>Add More Images 
-                                        </Link>
-                                        <br></br>
-                                        {property.taken? <h1>kkkk</h1>:
-                                        <Link to={{pathname:'/single_property/',SingleProperty:property}} className="btn btn-danger btn-sm add2cart-notify">
-                                        <i className="mr-1 lni lni-travel"></i>Set as Taken
-                                      </Link>
-                                        }
+
+                                      
+                                      
                                         
                                         
                                       </div>

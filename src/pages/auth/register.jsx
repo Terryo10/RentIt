@@ -45,9 +45,12 @@ class Login extends Component {
       [name]: value,
     });
   };
+
+
   render() {
     if(this.props.type === 'error'){
       let notif= new Notify()
+      console.log('tasvika')
       notif.error(this.props.message)
       let params ={
         type:"reset",
@@ -58,10 +61,11 @@ class Login extends Component {
         this.setState({
           isLoding:false
         })
-      },1000)
+      },2000)
      
      
     }
+
     if(this.props.type === 'success'){
       this.setState({
         isLoding:false
@@ -187,6 +191,7 @@ class Login extends Component {
 const mapStateToProps =(state)=>{
   return{
     authResponse:state.auth.authResponse,
+    message:state.notification.message,
     type:state.notification.type
   }
 }

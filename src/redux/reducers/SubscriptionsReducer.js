@@ -1,17 +1,23 @@
 const initState = {
   details: [],
+  fetching:true,
   subscribe: false,
   activateSubscription: false,
   updateSubscription: false,
   loading: false,
+  serverRecheck:false
 };
 
 const SubscriptionsReducer = (state = initState, action) => {
   switch (action.type) {
     case "DETAILS_FETCHED":
+      console.log(action)
       return {
         ...state,
         details: action.res.data.details,
+        fetching:false,
+        serverRecheck:true
+
       };
     case "SUBSCRIBE":
       return {

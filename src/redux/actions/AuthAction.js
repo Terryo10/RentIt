@@ -17,7 +17,7 @@ export const signUp =(credentials)=>{
                     localStorage.setItem("token",res.data.token);
                     localStorage.setItem("user",JSON.stringify(res.data.user));
                     dispatch({type:'SIGNUP_SUCCESS'})
-                    dispatch({type:'SUCCESS',message:"Registered Successfully..."})
+                    // dispatch({type:'SUCCESS',message:"Registered Successfully..."})
                 }else {
                     // dispatch({type:'SIGNUP_ERROR',res})
                     dispatch({type:'ERROR',res})

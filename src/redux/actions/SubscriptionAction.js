@@ -5,10 +5,10 @@ export const propertyDetails=(props)=>{
     return (dispatch)=> {
         dispatch({type:'LOADING'})
     detailsService(id).then((res)=>{
-            if (res.status === 200) {
+            if (res.data.success === true) {
                 dispatch({type:'STOP_LOADING'})
                 dispatch({type:'DETAILS_FETCHED',res})
-            } else if (res.status === 214) {
+            } else if (res.data.success === false) {
                 console.log('Please Subscribe to view details')
                 dispatch({type:'STOP_LOADING'})
                 dispatch({type:'SUBSCRIBE',res})

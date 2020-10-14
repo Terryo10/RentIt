@@ -2,35 +2,91 @@ import React, { Component } from "react";
 import HeaderGlobal from "./headerglobal";
 import FooterApp from "./footer";
 import SideBarApp from "./side";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { basePic } from "../apiUtils/picture";
 // import DetailsProperty from "./PropertyContactDetails";
 import PropertyImages from "./propertyImages";
 import Api from "../apiUtils/api";
+import Loading from "./loading";
+import {connect} from 'react-redux';
+import Notify from "../redux/services/notificate";
+import { ToastContainer} from 'react-toastify';
+import {NotificationDetails} from "../redux/actions/NotificationAction";
 
 class SingleProperty extends Component {
-  state = {
-    backgroundImage: "",
-    addingtowishlist: false,
-  };
+  constructor(props){
+    super(props)
+    if(this.props.location.SingleProperty != null){
+      this.state = {
+        backgroundImage: "",
+        isLoading:false,
+        addingtowishlist: false,
+        property:this.props.location.SingleProperty,
+        propertyNotFound:false
+      };
+    }else{
+      this.getProperty()
+    }
+    this.settings()
+    
+  }
+  
+  settings=()=>{
+    
+  }
 
+  getProperty=async()=>{
+    this.state={
+      isLoading:true,
+    }
+    let api = new Api();
+    return await api.getData('single_property/'+this.props.match.params.property_id).then((data)=>{
+      if(data.status===200){
+        if(data.data.success === true){
+          this.setState({
+          property:data.data.property,
+          isLoading:false,
+          propertyNotFound:false
+        })
+        }else{
+          console.log(data)
+          this.setState({
+            isLoading:false,
+            propertyNotFound:true
+          })
+        }
+        
+      }
+    })
+
+  }
   postThings=async()=>{
       let params ={
-          property_id :this.props.location.SingleProperty.id
+          property_id :this.state.property.id
       }
     let api = new Api();
     return await api.postData('/add_to_wishlist',params).then(data=>{
-        if(data.status === 200){
+        if(data.data.success === true){
             console.log('added to things')
             this.setState({
                 addingtowishlist: false,
               });
-        }else if(data.status === 220){
+              let params ={
+                type:"success",
+                message:data.data.message,
+              }
+              this.props.NotificationDetails(params)
+        }
             console.log('you have already added this item to your wish list')
             this.setState({
                 addingtowishlist: false,
               });
-        }
+              let params ={
+                type:"error",
+                message:data.data.message,
+              }
+              this.props.NotificationDetails(params)
+        
     },error=>{
         console.log('you are not logged in')
         this.props.history.push('/login')
@@ -47,30 +103,82 @@ class SingleProperty extends Component {
   };
 
   render() {
-    if (this.props.location.SingleProperty == null) {
-      return <Redirect to={{ pathname: "/home" }} />;
+    if(this.state.isLoading === true){
+      return(<div>
+        <HeaderGlobal props={this.props} />
+        <SideBarApp props={this.props} />
+       <Loading props={this.props}/>
+       <FooterApp props={this.props} />
+      </div>
+      );
+    }else if(this.state.propertyNotFound=== true){
+      return (
+      <div>
+         <HeaderGlobal props={this.props} />
+        <SideBarApp props={this.props} />
+        <div className="page-content-wrapper">
+        <div className="container">
+        <div className="col-md12 ">
+                     <br></br>
+                     <br></br>
+              <div className="card blog-catagory-card">
+                 <div className="card-body"><p text="center" ><i className="lni lni-quotation"></i><span className="d-block">That Property does not exist in our records</span></p></div>
+              </div>
+            </div>
+          </div>
+          </div>
+       <FooterApp props={this.props} />
+      </div>
+      )
     }
-    let kwatabva = this.props.location.SingleProperty;
+
+    if(this.props.type === 'error'){
+      let notif= new Notify()
+      notif.error(this.props.message)
+      let params ={
+        type:"reset",
+        message:"",
+      }
+      setTimeout(()=>{
+        this.props.NotificationDetails(params)
+        this.setState({
+          isLoding:false
+        })
+      },2000)
+     
+     
+    }
+    if(this.props.type === 'success'){
+      let notif= new Notify()
+      notif.success(this.props.message)
+      let params ={
+        type:"reset",
+        message:"",
+      }
+      setTimeout(()=>{
+        this.props.NotificationDetails(params)
+      },2000)
+    }
+    let kwatabva = this.state.property;
     let ngongo = basePic;
     let SinglePro = ngongo + kwatabva.imagePath;
-
     return (
       <div>
         <HeaderGlobal props={this.props} />
         <SideBarApp props={this.props} />
+        <ToastContainer />
         <div className="page-content-wrapper">
-          <div className="product-slides ">
-          
-            <div
-              className="single-product-slide"
-              style={{
+        <div className="blog-details-post-thumbnail" style={{
                 backgroundImage: "url(" + SinglePro + ")",
                 height: "300px"
-              }}
-            ></div>
-           
+              }}>
+        <div className="container">
+          <div className="post-bookmark-wrap">
+            <a className="post-bookmark" href="/"><i className="lni lni-bookmark"></i></a>
           </div>
-
+        </div>
+      </div>
+          
           <div className="product-description pb-3">
             <div className="product-title-meta-data bg-white mb-3 py-3">
               <div className="container d-flex justify-content-between">
@@ -79,7 +187,7 @@ class SingleProperty extends Component {
                   <p className="sale-price mb-0">${kwatabva.price}</p>
                   <p>{kwatabva.day_or_month}</p>
                   <Link
-                    to={{ pathname: "/property_details/", property: kwatabva }}
+                    to={{ pathname: "/property_details/",property: kwatabva }}
                   >
                     <button className="btn btn-success ml-3">
                       <i className="lni lni-phone"></i> View Location & Contact
@@ -178,4 +286,19 @@ class SingleProperty extends Component {
   }
 }
 
-export default SingleProperty;
+
+const mapStateToProps =(state)=>{
+  return{
+    // authResponse:state.auth.authResponse,
+    message:state.notification.message,
+    type:state.notification.type
+  }
+}
+
+const mapDispatchToProps =(dispatch)=>{
+  return{
+    NotificationDetails:(params)=>dispatch(NotificationDetails(params))
+  }
+
+}
+export default connect(mapStateToProps,mapDispatchToProps)(SingleProperty);

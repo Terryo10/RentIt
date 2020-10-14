@@ -41,20 +41,20 @@ class Houses extends Component {
                     <span className="badge badge-success">RentIt</span>
                     <Link
                       className="product-thumbnail d-block"
-                      to={{pathname:'/single_property/',SingleProperty:property}}
+                      to={{pathname:'/single_property/'+property.id,SingleProperty:property}}
                     >
                       <img src={basePic+property.imagePath} alt=""></img>
                     </Link>
                   </div>
                   <div className="product-description">
-                    <Link to={{pathname:'/single_property/',SingleProperty:property}} className="product-title d-block" href="/">
+                    <Link to={{pathname:'/single_property/'+property.id,SingleProperty:property}} className="product-title d-block" href="/">
                       {property.title}
                     </Link>
                     <p className="sale-price">
                       <i className="lni lni-dollar"></i>{property.price}
                     </p>
 
-                    <Link to={{pathname:'/single_property/',SingleProperty:property}} className="btn btn-success btn-sm add2cart-notify">
+                    <Link to={{pathname:'/single_property/'+property.id,SingleProperty:property}} className="btn btn-success btn-sm add2cart-notify">
                       <i className="mr-1 lni lni-travel"></i>View Property
                     </Link>
                   </div>

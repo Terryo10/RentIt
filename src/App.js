@@ -20,6 +20,10 @@ import DetailProperty from "./components/PropertyContactDetails";
 import Privacy from "./pages/privacy";
 import ChangePassword from "./pages/changePassword";
 import SearchProperties from "./pages/search";
+import EditPropertyOptions from "./components/Edit/editPropertyOptions"
+import EditProperties from "./components/Edit/editProperty";
+import ImageEditor from "./components/Edit/imageEditor";
+
 // import PayService from "./pages/payments/payservice";
 
 //tapiwa tererai's Central Route Config
@@ -32,14 +36,18 @@ export default function RouteConfigExample() {
         <Route exact path="/"  name="Home" component={Home}/>
         <Route exact path="/home" name="Home" component={Home}/>
         <LoggedInRoute exact path="/login" name="Login"component={Login}/>
+        <LoggedInRoute exact path="/fogotpassword" name="Login"component={ForgotPassword}/>
         <Route exact path="/search" name="search" component={SearchProperties}/>
         <Route exact path="/privacy" name="privacy" component={Privacy}/>
+        <PrivateRoute exact path="/edit_property_options/:property_id" name="Change Password" component={EditPropertyOptions}/>
+        <PrivateRoute exact path="/edit_property_details/:property_id" name="Change Password" component={EditProperties}/>
+        <PrivateRoute exact path="/edit_property_images/:property_id" name="Change Password" component={ImageEditor}/>
         <PrivateRoute exact path="/change_password" name="Change Password" component={ChangePassword}/>
         <PrivateRoute exact path="/my_properties" title="My properties" component={MyProperties}/>
         <PrivateRoute exact path="/my_wishlist"name="My WishList" component={MyWishlist}/>
         <PrivateRoute exact path="/post_property"name="PostProperty" component={PostProperty}/>
         <PrivateRoute exact path="/add_images_to_property/:property_id"name="PropertyAdded" component={PropertyAdded}/>
-        <Route exact path="/single_property" name="SingleProperty" component={SingleProperty}/>
+        <Route exact path="/single_property/:property_id" name="SingleProperty" component={SingleProperty}/>
         <PrivateRoute exact path="/property_details" name="My properties" component={DetailProperty}/>
         <PrivateRoute exact path="/settings" name="Settings" component={SettingsPage}/>
         <Route exact path="/categories" name="Categories" component={Category}/>

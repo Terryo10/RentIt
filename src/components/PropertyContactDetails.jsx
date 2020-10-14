@@ -28,6 +28,8 @@ class DetailsProperty extends Component {
     // this.setState({ details: data.properties });
   }
   render() {
+
+    
     if(this.props.location.property == null){
         return <Redirect to={{pathname: '/home'}}/>
     }else if(this.props.loading === true){
@@ -38,6 +40,8 @@ class DetailsProperty extends Component {
                         <FooterApp props={this.props}/>
                         </div>
            );
+    }else if(this.props.serverRecheck=== true){
+       
     }
     else if(this.props.subscribe === true){
        return <PayService props={this.props}/>
@@ -52,6 +56,8 @@ class DetailsProperty extends Component {
         <SideBarApp props={this.props} />
         <div className="page-content-wrapper">
                 <div className="container">
+                    {this.props.fetching? <Loading/>:
+
                     <div className="settings-wrapper py-3">
                         <div className="card settings-card">
                             <div className="card-body">
@@ -92,6 +98,9 @@ class DetailsProperty extends Component {
                             </div>
                         </div>
                     </div>
+                    
+                    
+                }
                 </div>
 
         </div>
@@ -106,7 +115,9 @@ const mapStateToProps =(state)=>{
         subscribe:state.subscription.subscribe,
         activateSubscription:state.subscription.activateSubscription,
         updateSubscription:state.subscription.updateSubscription,
-        loading:state.subscription.loading
+        loading:state.subscription.loading,
+        fetching:state.subscription.fetching,
+        serverRecheck:state.subscription.serverRecheck
     }
 };
 const mapDispatchToProps =(dispatch)=> {

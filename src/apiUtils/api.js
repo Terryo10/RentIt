@@ -1,10 +1,10 @@
   import axios from "axios";
 const api = axios.create({
-  baseURL: "http://192.168.8.102:5000/api/",
+  baseURL: "http://127.0.0.1:8000/api/",
 });
 
 class Api {
-  baseURL = "http://192.168.8.102:5000/api/";
+  baseURL = "http://127.0.0.1:8000/api/";
   postLoginData = async (addedurl, item) => {
     // console.log(token)
     let data = await api.post(addedurl,item).then((response) => response);
@@ -42,6 +42,19 @@ class Api {
     // console.log(token)
     
     let data = await api.get(addedurl, item).then((response) => response);
+
+      return data;
+  }
+
+  deleteData = async(addedurl)=>{
+    const token = await localStorage.getItem('token');
+    // console.log(token)
+    let requestOptions ={
+      headers:{'Authorization': `Bearer ${token}`,
+        'content-type':'Application/json'},
+      // body:JSON.stringify(item)
+    }
+    let data = await api.delete(addedurl,requestOptions).then((response) => response);
 
       return data;
   }
