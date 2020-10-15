@@ -138,7 +138,7 @@ class PostProperty extends Component {
 
 
   render() {
-  
+  const accetpted_types ='image/x-png, image/png, image/jpg, image/jpeg';
     if(this.props.type === 'error'){
       let notif= new Notify()
       notif.error(this.props.message)
@@ -442,7 +442,7 @@ class PostProperty extends Component {
                         <i className="lni lni-image"></i>
                         <span> Main Image</span>
                       </div>
-                      <input type="file" onChange={this.onFileChange} required></input>
+                      <input type="file" accept={accetpted_types} onChange={this.onFileChange} required></input>
                     </div>
                     <div>{action}</div>
                   </form>

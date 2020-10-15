@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import FooterApp from "./footer";
 import SideBarApp from "./side";
 import HeaderGlobal from "./headerglobal";
-import {Link} from "react-router-dom";
 import {propertyDetails} from "../redux/actions/SubscriptionAction";
 import {connect} from "react-redux";
 import PayService from "../pages/payments/payservice";
@@ -65,7 +64,7 @@ class DetailsProperty extends Component {
                                 <div className="single-settings d-flex align-items-center justify-content-between">
                                     <div className="title"><i className="lni lni-question-circle"></i><span>{this.props.details.street} <br></br>
                                     </span></div>
-                                    <div className="data-content"><Link className="pl-4" to="/my_properties"><i className="lni lni-travel"></i></Link></div>
+                                    <div className="data-content"><a className="pl-4" href={"https://maps.google.com/?q="+this.props.details.street}><i className="lni lni-travel"></i></a></div>
                                 </div>
                             </div>
                         </div>
