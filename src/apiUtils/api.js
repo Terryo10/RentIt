@@ -40,7 +40,6 @@ class Api {
 
   getUnauthenticatedData = async (addedurl, item) => {
     // console.log(token)
-    
     let data = await api.get(addedurl, item).then((response) => response);
 
       return data;

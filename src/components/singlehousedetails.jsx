@@ -124,7 +124,7 @@ class SingleProperty extends Component {
                      <br></br>
                      <br></br>
               <div className="card blog-catagory-card">
-                 <div className="card-body"><p text="center" ><i className="lni lni-quotation"></i><span className="d-block">That Property does not exist in our records</span></p></div>
+                 <div className="card-body"><p text="center" ><i className="lni lni-quotation"></i><span className="d-block">Sorry ! We could not find that property Or it was deleted</span></p></div>
               </div>
             </div>
           </div>

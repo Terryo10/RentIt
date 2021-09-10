@@ -129,11 +129,7 @@ class PostProperty extends Component {
 
 
     }
-
-
     )
-
-
   };
 
 
@@ -220,6 +216,7 @@ class PostProperty extends Component {
                           className="form-control"
                           id="exampleFormControlSelect1"
                           name="categories_id"
+                          defaultValue={{ label: "Select Category", value: 1}}
                           value={this.state.categories_id}
                           onChange={this.handleInputChange}
                           required

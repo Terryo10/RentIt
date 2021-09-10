@@ -11,15 +11,40 @@ class EditPropertyOptions extends Component {
     super(props)
     this.state={
       loading:false,
+        property:{},
     }
-    console.log(props)
+    console.log(props);
+      this.getPropertyDetailsFromServer(props.match.params.property_id);
   }
 
 checkPropertyOwner=async()=>{
   console.log('fires')
-
 }
 
+getPropertyDetailsFromServer=async()=> {
+      console.log('fetching');
+   this.loading = true;
+    let api= new Api();
+    return await api.getData('single_property/'+this.props.match.params.property_id).then((data)=> {
+        if (data.status === 200) {
+            if (data.data.success === true) {
+                console.log(data);
+                this.setState({
+                    property: data.data.property,
+                    loading: false,
+                    propertyNotFound: false
+                })
+            } else {
+                console.log(data)
+                this.setState({
+                    loading: false,
+                    propertyNotFound: true
+                })
+            }
+
+        }
+    });
+}
 deleteProperty=async(id)=>{
   this.setState({
     loading:true
@@ -27,15 +52,41 @@ deleteProperty=async(id)=>{
   let api= new Api();
   return await api.deleteData('properties/'+id).then((data)=>{
    if(data.data.success === true){
+       console.log('property found' + data);
     this.props.history.push('/my_properties');
+       let params ={
+           type:"success",
+           message:"Your Property was updated successfully",
+       }
+       this.props.NotificationDetails(params)
    }else{
     this.props.history.push('/my_properties');
    }
-    
   })
 
-
 }
+
+editPropertyAsTaken=async(id , status)=>{
+    this.setState({
+        loading:true
+    })
+      let api = new Api();
+      let postData = {
+          property_id: id,
+          status :status
+      }
+    return await api.postData('update_property_as_taken',postData).then((data)=>{
+        if(data.data.success === true){
+            this.props.history.push('/my_properties');
+            this.setState({
+                loading:false
+            })
+        }else{
+            this.props.history.push('/my_properties');
+        }
+   })
+  }
+
 
   render() {
     return(
@@ -59,7 +110,6 @@ deleteProperty=async(id)=>{
                       </Link>
                     </div>
                   </div>
-                  
                 </div>
                 
               </div>
@@ -115,11 +165,12 @@ deleteProperty=async(id)=>{
                   <div className="single-settings d-flex align-items-center justify-content-between">
                     <div className="title">
                       <i className="lni lni-question-circle"></i>
-                      <span>Set As Taken</span>
+                      <span>{ this.state.property.taken === 0 ? 'Set As Taken':  'Set As Available'}</span>
                     </div>
                     <div className="data-content">
-                      <div className="pl-4" onClick={()=>{this.deleteProperty(this.props.match.params.property_id)}}>
-                        <i className="lni lni-chevron-right"></i>
+                      <div className="pl-4" onClick={()=>{ this.state.property.taken === 0 ? this.editPropertyAsTaken(this.props.match.params.property_id,1) : this.editPropertyAsTaken(this.props.match.params.property_id,0)}}>
+                          <i className="lni lni-chevron-right"></i>
+
                       </div>
                     </div>
                   </div>
@@ -129,7 +180,6 @@ deleteProperty=async(id)=>{
               </div>
               </div>
               }
-
 
           <FooterApp props={this.props}/>
          </div>

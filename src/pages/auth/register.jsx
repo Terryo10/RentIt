@@ -30,6 +30,7 @@ class Login extends Component {
     let regState={
       email:this.state.email,
       password:this.state.password,
+      confirm_password:this.state.password,
       name:this.state.username
     }
     this.props.signUp(regState,this.props.history);

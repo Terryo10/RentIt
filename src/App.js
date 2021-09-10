@@ -21,10 +21,12 @@ import Privacy from "./pages/privacy";
 import ChangePassword from "./pages/changePassword";
 import SearchProperties from "./pages/search";
 import EditPropertyOptions from "./components/Edit/editPropertyOptions"
-import EditProperties from "./components/Edit/editProperty";
+// import EditProperties from "./components/Edit/editProperty";
 import ImageEditor from "./components/Edit/imageEditor";
 import ImageViewer from "./components/imageViewer";
-import Pay from "./pages/payments/pay";
+// import Pay from "./pages/payments/pay";
+import Packages from "./pages/payments/packages";
+import PayService from "./pages/payments/payservice";
 
 // import PayService from "./pages/payments/payservice";
 
@@ -42,9 +44,9 @@ export default function RouteConfigExample() {
         <Route exact path="/search" name="search" component={SearchProperties}/>
         <Route exact path="/privacy" name="privacy" component={Privacy}/>
         <Route exact path="/image_view/:imagePath" name="Home" component={ImageViewer}/>
-        <PrivateRoute exact path="/pay" name="Change Password" component={Pay}/>
-        <PrivateRoute exact path="/edit_property_options/:property_id" name="Change Password" component={EditPropertyOptions}/>
-        <PrivateRoute exact path="/edit_property_details/:property_id" name="Change Password" component={EditProperties}/>
+        <PrivateRoute exact path="/pay" name="Make Payment" component={PayService}/>
+        <PrivateRoute exact path="/edit_property_options/:property_id" name="Edit Property" component={EditPropertyOptions}/>
+        {/*<PrivateRoute exact path="/edit_property_details/:property_id" name="Change Password" component={EditProperties}/>*/}
         <PrivateRoute exact path="/edit_property_images/:property_id" name="Change Password" component={ImageEditor}/>
         <PrivateRoute exact path="/change_password" name="Change Password" component={ChangePassword}/>
         <PrivateRoute exact path="/my_properties" title="My properties" component={MyProperties}/>
@@ -54,6 +56,7 @@ export default function RouteConfigExample() {
         <Route exact path="/single_property/:property_id" name="SingleProperty" component={SingleProperty}/>
         <PrivateRoute exact path="/property_details/:property_id" name="My properties" component={DetailProperty}/>
         <PrivateRoute exact path="/settings" name="Settings" component={SettingsPage}/>
+        <PrivateRoute exact path ="/token_packages" name="packages" component={Packages}/>
         <Route exact path="/categories" name="Categories" component={Category}/>
         <Route path="/single_category/:category_id" name="Single Category" component={CategorySingle}/>
         <Route exact path="/login" name="Login" component={LoginPage}/>

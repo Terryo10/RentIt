@@ -13,14 +13,21 @@ class Houses extends Component {
     this.state = {
       properties: [],
       isLoading: true,
+      failedToLoad: false,
     };
    this.handlePageChange= this.handlePageChange.bind(this)
   }
   gethouses = async () => {
     let api = new Api();
     let data = await api.getData("/properties").then(({ data }) => data);
+    if(data.status !== 200){
+      this.setState({
+        failedToLoad:true,
+      })
+    }
     console.log(data);
     this.setState({
+      failedToLoad:false,
       isLoading: false,
       properties: data.properties.data,
       activePage:data.properties.data.current_page,
@@ -28,6 +35,7 @@ class Houses extends Component {
       itemsCountPerPage:data.properties.per_page
     });
   };
+
   handlePageChange= async(pageNumber)=>{
     this.setState({
       isLoading:true
@@ -82,7 +90,6 @@ class Houses extends Component {
                         <i className="lni lni-dollar"></i>
                         {property.price}
                       </p>
-
                       <Link
                         to={{
                           pathname: "/single_property/" + property.id,

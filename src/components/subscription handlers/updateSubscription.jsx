@@ -10,7 +10,7 @@ class UpdateSubscription extends Component{
                 <HeaderGlobal props={this.props.props}/>
                 <SideBarApp props={this.props}/>
                 <div className="page-content-wrapper">
-                    <h1>Your subscription expired please update</h1>
+                    <h1>Your Contact Viewing Tokens Have Depleted Please Topup</h1>
                 </div>
                 <FooterApp props={this.props}/>
             </div>

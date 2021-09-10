@@ -10,8 +10,8 @@ export const signUpService =(credentials) =>{
 
 export const loginService =(credentials,propsHistory)=>{
     const api = new Api();
-    // let loginUrl = "login"
     return api.postLoginData(`login`,credentials).then(data=>{
+        console.log(data);
         return data
     }).catch(error=>console.log(error))
 }

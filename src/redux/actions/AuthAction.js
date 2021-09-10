@@ -27,7 +27,6 @@ export const signUp =(credentials)=>{
                 dispatch({type:'CODE_ERROR',error})
                 console.log(error)
             }
-
         )
     }
 
@@ -41,13 +40,12 @@ export const login =(credentials,history)=>{
             
         }
         loginService(credentials,history).then((res)=>{
+            console.log(res);
             if(res.data.token!=null){
                 console.log(res.data.user)
             localStorage.setItem("token",res.data.token);
                 localStorage.setItem("user",JSON.stringify(res.data.user));
-                
             dispatch({type:'LOGIN_SUCCESS'})
-            // dispatch({type:'SUCCESS',message:"Logged in please wait..."})
 
         }else {
                 dispatch({type:'LOGIN_ERROR',res})

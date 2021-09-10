@@ -59,13 +59,10 @@ class MyProperties extends Component{
                                           <i className="lni lni-dollar"></i>{property.price}
                                         </p>
                     
-                                        <Link to={{pathname:'/edit_property_options/'+property.id,SingleProperty:property}} className="btn btn-success btn-sm add2cart-notify">
+                                        <Link to={{pathname:'/edit_property_options/'+property.id}} className="btn btn-success btn-sm add2cart-notify">
                                           <i className="mr-1 lni lni-travel"></i>Edit Property
                                         </Link>
 
-                                      
-                                      
-                                        
                                         
                                       </div>
                                     </div>
