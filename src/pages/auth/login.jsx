@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import {Link } from "react-router-dom";
-import {connect} from 'react-redux';
-import {login} from "../../redux/actions/AuthAction";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { login } from "../../redux/actions/AuthAction";
 import Notify from "../../redux/services/notificate";
-import { ToastContainer} from 'react-toastify';
-import {NotificationDetails} from "../../redux/actions/NotificationAction";
+import { ToastContainer } from "react-toastify";
+import { NotificationDetails } from "../../redux/actions/NotificationAction";
 
 class Login extends Component {
   constructor(props) {
@@ -20,8 +20,6 @@ class Login extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-
-
   handleInputChange = (event) => {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
@@ -32,57 +30,64 @@ class Login extends Component {
     });
   };
 
-  login =(e)=>{
-    
+  login = (e) => {
     this.setState({
-      isLoding:true
-    })
-   let loginState ={
-      email:this.state.email,
-     password: this.state.password
-    }
-    e.preventDefault()
-   this.props.login(loginState,this.props.history)
+      isLoding: true,
+    });
+    let loginState = {
+      email: this.state.email,
+      password: this.state.password,
+    };
+    e.preventDefault();
+    this.props.login(loginState, this.props.history);
+  };
 
-  }
-
-
-  
-  render() {  
-    if(this.props.type === 'error'){
-      let notif= new Notify()
-      notif.error(this.props.message)
-      let params ={
-        type:"reset",
-        message:"",
-      }
-      setTimeout(()=>{
-        this.props.NotificationDetails(params)
+  render() {
+    console.log(this.props);
+    if (this.props.type === "error") {
+      let notif = new Notify();
+      notif.error(this.props.authResponse);
+      let params = {
+        type: "reset",
+        message: "",
+      };
+      setTimeout(() => {
+        this.props.NotificationDetails(params);
         this.setState({
-          isLoding:false
-        })
-      },2000)
-     
-     
+          isLoding: false,
+        });
+      }, 2000);
     }
-    if(this.props.type === 'success'){
+    if (this.props.type === "warning") {
+      let notif = new Notify();
+      notif.error(this.props.authResponse);
+      let params = {
+        type: "reset",
+        message: "",
+      };
+      setTimeout(() => {
+        this.props.NotificationDetails(params);
+        this.setState({
+          isLoding: false,
+        });
+      }, 2000);
+    }
+    if (this.props.type === "success") {
       this.setState({
-        isLoding:false
-      })
-      let notif= new Notify()
-      notif.success(this.props.message)
-      let params ={
-        type:"reset",
-        message:"",
-      }
-      setTimeout(()=>{
-        this.props.NotificationDetails(params)
-        this.props.history.push('/')
-      },2000)
+        isLoding: false,
+      });
+      let notif = new Notify();
+      notif.success(this.props.message);
+      let params = {
+        type: "reset",
+        message: "",
+      };
+      setTimeout(() => {
+        this.props.NotificationDetails(params);
+        this.props.history.push("/");
+      }, 2000);
     }
-    
 
-  
     let loading = (
       <div className=" d-flex justify-content-center">
         <div className="spinner-border text-dark " role="status">
@@ -101,8 +106,6 @@ class Login extends Component {
       );
     }
     return (
-     
-
       <div className="login-wrapper d-flex align-items-center justify-content-center text-center">
         <div className="background-shape"></div>
         <ToastContainer />
@@ -113,7 +116,7 @@ class Login extends Component {
                 className="big-logo"
                 src="/assets/img/core-img/rentit.png"
                 alt=""
-                style={{"height":"150px"}}
+                style={{ height: "150px" }}
               ></img>
 
               <div className="register-form mt-5 px-4">
@@ -156,7 +159,10 @@ class Login extends Component {
                 </form>
 
                 <div className="login-meta-data">
-                  <Link to="/fogotpassword" className="forgot-password d-block mt-3 mb-1">
+                  <Link
+                    to="/fogotpassword"
+                    className="forgot-password d-block mt-3 mb-1"
+                  >
                     Forgot Password?
                   </Link>
                   <p className="mb-0">
@@ -181,19 +187,18 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps =(state)=>{
-  return{
-    authResponse:state.auth.authResponse,
-    message:state.notification.message,
-    type:state.notification.type
-  }
-}
+const mapStateToProps = (state) => {
+  return {
+    authResponse: state.auth.authResponse,
+    message: state.notification.message,
+    type: state.notification.type,
+  };
+};
 
-const mapDispatchToProps =(dispatch)=>{
-  return{
-    login:(creds,history)=>dispatch(login(creds,history)),
-    NotificationDetails:(params)=>dispatch(NotificationDetails(params))
-  }
-
-}
-export default connect(mapStateToProps,mapDispatchToProps)(Login);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (creds, history) => dispatch(login(creds, history)),
+    NotificationDetails: (params) => dispatch(NotificationDetails(params)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
