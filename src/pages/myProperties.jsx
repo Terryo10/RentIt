@@ -62,8 +62,6 @@ class MyProperties extends Component{
                                         <Link to={{pathname:'/edit_property_options/'+property.id}} className="btn btn-success btn-sm add2cart-notify">
                                           <i className="mr-1 lni lni-travel"></i>Edit Property
                                         </Link>
-
-                                        
                                       </div>
                                     </div>
                                   </div>

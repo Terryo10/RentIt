@@ -15,7 +15,6 @@ class Loading extends Component{
                 <div className="spinner-grow text-primary" style={{width: "3rem", height: "3rem"}} role="status">
                     <span className="sr-only">Loading...</span>
                 </div>
-
             </div>
 
                 </div>
